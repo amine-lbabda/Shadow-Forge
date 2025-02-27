@@ -4,7 +4,7 @@
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
-void menu_options(SDL_Surface *window)
+void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolume, int *run)
 {
     image background;
     image btn1;
@@ -34,10 +34,9 @@ void menu_options(SDL_Surface *window)
     image logof;
     int quit = 0;
     SDL_Event e;
-    int currentVolume = MIX_MAX_VOLUME;
     int fullscreen = 0;
 
-    background.image = IMG_Load("../assets/backgrounds/bg_ahh.png");
+    background.image = IMG_Load("../assets/backgrounds/bgf.png");
     btn1.image = IMG_Load("../assets/buttons/buttonvs.png");
     btn2.image = IMG_Load("../assets/buttons/buttonvs.png");
     volp.image = IMG_Load("../assets/buttons/volp.png");
@@ -126,8 +125,8 @@ void menu_options(SDL_Surface *window)
     music.rect.w = music.image->w;
     music.rect.h = music.image->h;
 
-    returntxt.rect.x = 40;
-    returntxt.rect.y = 700;
+    returntxt.rect.x = 48;
+    returntxt.rect.y = 942;
     returntxt.rect.w = returntxt.image->w;
     returntxt.rect.h = returntxt.image->h;
 
@@ -203,23 +202,22 @@ void menu_options(SDL_Surface *window)
     logof.rect.w = logof.image->w;
     logof.rect.h = logof.image->h;
 
-    Mix_Music *title = Mix_LoadMUS("../assets/audio/river.mp3");
-    if (!title)
+    if (!music_chunk)
     {
         printf("Failed to load background music: %s\n", Mix_GetError());
-        SDL_Quit(); 
+        SDL_Quit();
     }
 
-    Mix_PlayMusic(title, -1); 
-    Mix_VolumeMusic(currentVolume);
+    Mix_VolumeMusic(*currentVolume);
     while (!quit)
     {
-        while (SDL_PollEvent(&e))
+        while (SDL_PollEvent(&e) && !quit)
         {
             switch (e.type)
             {
             case SDL_QUIT:
                 quit = 1;
+                *run = 0;
                 break;
             case SDL_KEYDOWN:
                 if (e.key.keysym.sym == SDLK_ESCAPE)
@@ -229,104 +227,99 @@ void menu_options(SDL_Surface *window)
 
                 if (verif_collision_2(e, volp))
                 {
-                    currentVolume += MIX_MAX_VOLUME * 0.1; 
-                    if (currentVolume > MIX_MAX_VOLUME)
-                        currentVolume = MIX_MAX_VOLUME; 
-                    Mix_VolumeMusic(currentVolume);     
-                    printf("Volume Increased: %d%%\n", (currentVolume * 100) / MIX_MAX_VOLUME);
+                    *currentVolume += MIX_MAX_VOLUME * 0.1;
+                    if (*currentVolume > MIX_MAX_VOLUME)
+                        *currentVolume = MIX_MAX_VOLUME;
+                    Mix_VolumeMusic(*currentVolume);
+                    printf("Volume Increased: %d%%\n", ((*currentVolume) * 100) / MIX_MAX_VOLUME);
                 }
 
                 if (verif_collision_2(e, volm))
                 {
-                    currentVolume -= MIX_MAX_VOLUME * 0.1; 
-                    if (currentVolume < 0)
-                        currentVolume = 0;         
-                    Mix_VolumeMusic(currentVolume); 
-                    printf("Volume Decreased: %d%%\n", (currentVolume * 100) / MIX_MAX_VOLUME);
+                    *currentVolume -= MIX_MAX_VOLUME * 0.1;
+                    if (*currentVolume < 0)
+                        *currentVolume = 0;
+                    Mix_VolumeMusic(*currentVolume);
+                    printf("Volume Decreased: %d%%\n", ((*currentVolume) * 100) / MIX_MAX_VOLUME);
                     break;
                 }
                 if (verif_collision_2(e, volpf))
                 {
-                    currentVolume += MIX_MAX_VOLUME * 0.1; 
-                    if (currentVolume > MIX_MAX_VOLUME)
-                        currentVolume = MIX_MAX_VOLUME; 
-                    Mix_VolumeMusic(currentVolume);     
-                    printf("Volume Increased: %d%%\n", (currentVolume * 100) / MIX_MAX_VOLUME);
+                    *currentVolume += MIX_MAX_VOLUME * 0.1;
+                    if (*currentVolume > MIX_MAX_VOLUME)
+                        *currentVolume = MIX_MAX_VOLUME;
+                    Mix_VolumeMusic(*currentVolume);
+                    printf("Volume Increased: %d%%\n", ((*currentVolume) * 100) / MIX_MAX_VOLUME);
                     break;
                 }
 
                 if (verif_collision_2(e, volmf))
                 {
-                    currentVolume -= MIX_MAX_VOLUME * 0.1; 
-                    if (currentVolume < 0)
-                        currentVolume = 0;          
-                    Mix_VolumeMusic(currentVolume); 
-                    printf("Volume Decreased: %d%%\n", (currentVolume * 100) / MIX_MAX_VOLUME);
+                    *currentVolume -= MIX_MAX_VOLUME * 0.1;
+                    if (*currentVolume < 0)
+                        *currentVolume = 0;
+                    Mix_VolumeMusic(*currentVolume);
+                    printf("Volume Decreased: %d\n", ((*currentVolume) * 100) / MIX_MAX_VOLUME);
                     break;
                 }
                 if (verif_collision_2(e, btn2))
                 {
-
-                    int screenWidth = 1280, screenHeight = 800; 
-
-                    getDesktopResolution(&screenWidth, &screenHeight);
                     fullscreen = 1;
 
                     if (fullscreen == 1)
                     {
-
-                        window = SDL_SetVideoMode(screenWidth, screenHeight, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
                         SDL_FreeSurface(background.image);
-
-                        background.image = IMG_Load("../assets/backgrounds/bg_secondaire.png");
+                        background.image = IMG_Load("../assets/backgrounds/bgf.png");
+                        SDL_WM_ToggleFullScreen(window);
                     }
                 }
                 if (verif_collision_2(e, btn1f))
                 {
                     fullscreen = 0;
-                    window = SDL_SetVideoMode(1280, 800, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE);
+                    window = SDL_SetVideoMode(1920, 1080, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE);
                     SDL_FreeSurface(background.image);
 
-                    background.image = IMG_Load("../assets/backgrounds/bg_ahh.png");
+                    background.image = IMG_Load("../assets/backgrounds/bgf.png");
                 }
                 if (verif_collision_2(e, returntxt))
                 {
-                    Menu(window);
+                    quit = 1;
                 }
             }
+            if (fullscreen == 0)
+            {
+                SDL_BlitSurface(background.image, NULL, window, &background.rect);
+                SDL_BlitSurface(btn1.image, NULL, window, &btn1.rect);
+                SDL_BlitSurface(btn2.image, NULL, window, &btn2.rect);
+                SDL_BlitSurface(volp.image, NULL, window, &volp.rect);
+                SDL_BlitSurface(volm.image, NULL, window, &volm.rect);
+                SDL_BlitSurface(fs.image, NULL, window, &fs.rect);
+                SDL_BlitSurface(win.image, NULL, window, &win.rect);
+                SDL_BlitSurface(volcon.image, NULL, window, &volcon.rect);
+                SDL_BlitSurface(wincon.image, NULL, window, &wincon.rect);
+                SDL_BlitSurface(music.image, NULL, window, &music.rect);
+                SDL_BlitSurface(options.image, NULL, window, &options.rect);
+                SDL_BlitSurface(returntxt.image, NULL, window, &returntxt.rect);
+                SDL_BlitSurface(logo.image, NULL, window, &logo.rect);
+            }
+            else if (fullscreen == 1)
+            {
+                SDL_BlitSurface(background.image, NULL, window, &background.rect);
+                SDL_BlitSurface(btn1f.image, NULL, window, &btn1f.rect);
+                SDL_BlitSurface(btn2f.image, NULL, window, &btn2f.rect);
+                SDL_BlitSurface(volpf.image, NULL, window, &volpf.rect);
+                SDL_BlitSurface(volmf.image, NULL, window, &volmf.rect);
+                SDL_BlitSurface(fsf.image, NULL, window, &fsf.rect);
+                SDL_BlitSurface(winf.image, NULL, window, &winf.rect);
+                SDL_BlitSurface(volconf.image, NULL, window, &volconf.rect);
+                SDL_BlitSurface(winconf.image, NULL, window, &winconf.rect);
+                SDL_BlitSurface(musicf.image, NULL, window, &musicf.rect);
+                SDL_BlitSurface(optionsf.image, NULL, window, &optionsf.rect);
+                SDL_BlitSurface(logof.image, NULL, window, &logof.rect);
+                SDL_BlitSurface(returntxt.image, NULL, window, &returntxt.rect);
+            }
+            SDL_Flip(window);
         }
-        if (fullscreen == 0)
-        {
-            SDL_BlitSurface(background.image, NULL, window, &background.rect);
-            SDL_BlitSurface(btn1.image, NULL, window, &btn1.rect);
-            SDL_BlitSurface(btn2.image, NULL, window, &btn2.rect);
-            SDL_BlitSurface(volp.image, NULL, window, &volp.rect);
-            SDL_BlitSurface(volm.image, NULL, window, &volm.rect);
-            SDL_BlitSurface(fs.image, NULL, window, &fs.rect);
-            SDL_BlitSurface(win.image, NULL, window, &win.rect);
-            SDL_BlitSurface(volcon.image, NULL, window, &volcon.rect);
-            SDL_BlitSurface(wincon.image, NULL, window, &wincon.rect);
-            SDL_BlitSurface(music.image, NULL, window, &music.rect);
-            SDL_BlitSurface(options.image, NULL, window, &options.rect);
-            SDL_BlitSurface(returntxt.image, NULL, window, &returntxt.rect);
-            SDL_BlitSurface(logo.image, NULL, window, &logo.rect);
-        }
-        else if (fullscreen == 1)
-        {
-            SDL_BlitSurface(background.image, NULL, window, &background.rect);
-            SDL_BlitSurface(btn1f.image, NULL, window, &btn1f.rect);
-            SDL_BlitSurface(btn2f.image, NULL, window, &btn2f.rect);
-            SDL_BlitSurface(volpf.image, NULL, window, &volpf.rect);
-            SDL_BlitSurface(volmf.image, NULL, window, &volmf.rect);
-            SDL_BlitSurface(fsf.image, NULL, window, &fsf.rect);
-            SDL_BlitSurface(winf.image, NULL, window, &winf.rect);
-            SDL_BlitSurface(volconf.image, NULL, window, &volconf.rect);
-            SDL_BlitSurface(winconf.image, NULL, window, &winconf.rect);
-            SDL_BlitSurface(musicf.image, NULL, window, &musicf.rect);
-            SDL_BlitSurface(optionsf.image, NULL, window, &optionsf.rect);
-            SDL_BlitSurface(logof.image, NULL, window, &logof.rect);
-        }
-        SDL_Flip(window);
     }
 
     SDL_FreeSurface(background.image);
@@ -353,8 +346,4 @@ void menu_options(SDL_Surface *window)
     SDL_FreeSurface(optionsf.image);
     SDL_FreeSurface(returntxtf.image);
     SDL_FreeSurface(logof.image);
-
-    Mix_FreeMusic(title);
-    Mix_CloseAudio();
-    SDL_Quit();
 }

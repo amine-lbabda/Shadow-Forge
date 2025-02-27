@@ -12,5 +12,5 @@ TTF_Font *affichage_text2(char nom[]);
 TTF_Font *affichage_score(char nom[]);
 TTF_Font *affichage_name(char nom[]);
 int mousehover(SDL_Rect pos);
-void score2(SDL_Surface *ecran);
-void liberer2(SDL_Surface *image,Mix_Music *musique,TTF_Font *font,Mix_Chunk *tick);
+void score2(SDL_Surface *ecran, int *run);
+void liberer2(SDL_Surface *image, TTF_Font *font, Mix_Chunk *tick, int run);

@@ -46,10 +46,6 @@ void init_save(save *s)
     s->pos_new.w = s->new[0]->w;
     s->pos_new.h = s->new[0]->h;
 
-    if (TTF_Init() == -1)
-    {
-        printf("Erreur TTF_Init : %s\n", TTF_GetError());
-    }
 
     s->font = TTF_OpenFont("../assets/fonts/aa.TTF", 45);
     if (s->font == NULL)

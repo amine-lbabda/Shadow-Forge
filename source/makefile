@@ -1,4 +1,4 @@
-mymenu: main.o menu.o chargement.o save.o menu_mode.o source_menu.o source_score.o score.o options.o source_options.o quiz.o source_quiz.o
+mymenu: main.o menu.o chargement.o save.o menu_mode.o source_menu.o source_score.o score.o options.o source_options.o quiz.o source_quiz.o source_menu_principale.o
 	gcc $^ -o mymenu -lSDL -lSDL_image -lSDL_mixer -lSDL_ttf -lX11 -g
 
 main.o: main.c
@@ -36,6 +36,8 @@ quiz.o: quiz.c
 
 source_quiz.o: source_quiz.c
 	gcc -c source_quiz.c -g
+source_menu_principale.o:source_menu_principale.c
+	gcc -c source_menu_principale.c -g
 
 clean:
 	rm -f *.o

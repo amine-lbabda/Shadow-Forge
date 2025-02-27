@@ -6,7 +6,7 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
-void menu_mode(SDL_Surface *ecran)
+void menu_mode(SDL_Surface *ecran, int *run)
 {
 	Mix_Music *music_theme;
 	Mix_Chunk *music_click;
@@ -144,12 +144,13 @@ void menu_mode(SDL_Surface *ecran)
 					{
 						afficher(confirm_image.image, NULL, ecran, &confirm_image.posimage);
 					}
-					while (SDL_PollEvent(&e))
+					while (SDL_PollEvent(&e) && quitter == 0)
 					{
 						switch (e.type)
 						{
 						case SDL_QUIT:
-							quitter = 1;
+							quitter = 0;
+							*run = 0;
 							break;
 
 						case SDL_KEYDOWN:
@@ -157,6 +158,7 @@ void menu_mode(SDL_Surface *ecran)
 							if (e.key.keysym.sym == SDLK_ESCAPE)
 							{
 								quitter = 1;
+								*run = 0;
 							}
 						}
 						break;
@@ -192,10 +194,6 @@ void menu_mode(SDL_Surface *ecran)
 							{
 								afficher(confirm_image_clicked.image, NULL, ecran, &confirm_image_clicked.posimage);
 							}
-							if (confirm_score == 1 && verif_collision(e, confirm_image))
-							{
-								score2(ecran);
-							}
 						}
 						break;
 						case SDL_MOUSEBUTTONDOWN:
@@ -225,7 +223,7 @@ void menu_mode(SDL_Surface *ecran)
 								Mix_PlayChannel(-1, music_click, 0);
 								if (menu_mode == 0 && affiche_menu < 0)
 								{
-									Menu(ecran);
+									quitter = 1;
 								}
 							}
 							if (verif_collision(e, button_multi))
@@ -244,6 +242,10 @@ void menu_mode(SDL_Surface *ecran)
 							{
 								Mix_PlayChannel(-1, music_click, 0);
 							}
+							if (confirm_score == 1 && verif_collision(e, confirm_image))
+							{
+								score2(ecran, run);
+							}
 						}
 						break;
 						}
@@ -254,7 +256,7 @@ void menu_mode(SDL_Surface *ecran)
 			}
 		}
 	}
-	liberer(ecran, background.image, button_mono.image, button_multi.image, button_name_1.image, button_name_2.image, button_mono_text.font);
+	liberer(background.image, button_mono.image, button_multi.image, button_name_1.image, button_name_2.image, button_mono_text.font);
 	Mix_FreeMusic(music_theme);
 	Mix_FreeChunk(music_click);
 	SDL_FreeSurface(background_secondaire.image);

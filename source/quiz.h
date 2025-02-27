@@ -34,5 +34,5 @@ void update(menu *);
 void afficher_quiz(quiz, SDL_Surface *ecran);
 void init_quiz(quiz *);
 void cleanup(menu *m, quiz *q);
-void menu_quiz(SDL_Surface *ecran);
+void menu_quiz(SDL_Surface *ecran, int *run);
 #endif

@@ -5,11 +5,6 @@
 #include "quiz.h"
 void init_menu(menu *m)
 {
-   if (TTF_Init() == -1)
-   {
-      printf("TTF_Init failed: %s\n", TTF_GetError());
-      return;
-   }
    m->bg_principale = IMG_Load("../assets/backgrounds/bground.png");
    SDL_Surface *logo = IMG_Load("../assets/backgrounds/bground.png");
    m->bquiz[0] = IMG_Load("../assets/buttons/bquiz1.png");
@@ -170,7 +165,4 @@ void cleanup(menu *m, quiz *q)
    SDL_FreeSurface(q->bg_principale);
    SDL_FreeSurface(q->Return[0]);
    SDL_FreeSurface(q->Return[1]);
-
-   TTF_Quit();
-   SDL_Quit();
 }

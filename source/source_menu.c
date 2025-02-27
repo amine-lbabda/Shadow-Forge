@@ -3,27 +3,6 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
-SDL_Surface *initialiser(int w, int h)
-{
-    SDL_Surface *ecran;
-    int ready;
-    ready = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) == TTF_Init() == Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == IMG_Init(IMG_INIT_PNG);
-
-    if (ready < 0)
-    {
-        printf("Echec d'initialisation de SDL : %s\n", SDL_GetError());
-    }
-
-    else
-        printf("Bonjour le monde, SDL est initialisé avec succès.\n");
-    ecran = SDL_SetVideoMode(w, h, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE);
-    if (ecran == NULL)
-    {
-        fprintf(stderr, "Echec de creation de la fenetre de %d*%d: %s.\n", w, h, SDL_GetError());
-    }
-
-    return ecran;
-}
 SDL_Surface *load_image(char *name)
 {
 
@@ -71,7 +50,7 @@ void couleur_text(SDL_Color *color, int r, int g, int b)
     color->b = b;
 }
 
-void liberer(SDL_Surface *ecran, SDL_Surface *background, SDL_Surface *button_mono, SDL_Surface *button_multi, SDL_Surface *button_name_1, SDL_Surface *button_name_2, TTF_Font *font)
+void liberer(SDL_Surface *background, SDL_Surface *button_mono, SDL_Surface *button_multi, SDL_Surface *button_name_1, SDL_Surface *button_name_2, TTF_Font *font)
 {
     SDL_FreeSurface(background);
     SDL_FreeSurface(button_mono);
@@ -79,6 +58,5 @@ void liberer(SDL_Surface *ecran, SDL_Surface *background, SDL_Surface *button_mo
     SDL_FreeSurface(button_name_1);
     SDL_FreeSurface(button_name_2);
     Mix_CloseAudio();
-    SDL_Quit();
     TTF_CloseFont(font);
 }

@@ -7,26 +7,36 @@
 #include "save.h"
 #include "menu_mode.h"
 #include "menu.h"
-void chargement(SDL_Surface *ecran)
+void chargement(SDL_Surface *ecran, int *run)
 {
     SDL_Event event;
     save s;
     int quitter = 1;
     int indice = 0;
     init_save(&s);
-    while (quitter)
+    while (quitter && *run)
     {
         switch (indice)
         {
         case 0:
             afficher_save(s, ecran);
-            while (SDL_PollEvent(&event))
+            while (SDL_PollEvent(&event) && *run)
             {
                 switch (event.type)
                 {
                 case SDL_QUIT:
                     quitter = 0;
+                    *run = 0;
                     break;
+                case SDL_KEYDOWN:
+                {
+                    if (event.key.keysym.sym == SDLK_ESCAPE)
+                    {
+                        quitter = 0;
+                        *run = 0;
+                    }
+                }
+                break;
                 case SDL_MOUSEBUTTONDOWN:
                     if (event.button.button == SDL_BUTTON_LEFT)
                     {
@@ -47,7 +57,6 @@ void chargement(SDL_Surface *ecran)
                     break;
                 }
             }
-            SDL_Flip(ecran);
             break;
 
         case 1:
@@ -58,6 +67,7 @@ void chargement(SDL_Surface *ecran)
                 {
                 case SDL_QUIT:
                     quitter = 0;
+                    *run = 0;
                     break;
                 case SDL_MOUSEBUTTONDOWN:
                     if (event.button.button == SDL_BUTTON_LEFT)
@@ -70,7 +80,7 @@ void chargement(SDL_Surface *ecran)
                         if (s.btn_select == 4)
                         {
                             printf("New Game sélectionné\n");
-                            menu_mode(ecran);
+                            menu_mode(ecran, run);
                         }
                         if (s.btn_select == 5)
                         {
@@ -82,17 +92,15 @@ void chargement(SDL_Surface *ecran)
                 {
                     if (event.key.keysym.sym == SDLK_n)
                     {
-                        menu_mode(ecran);
+                        menu_mode(ecran, run);
                     }
                 }
                 }
                 break;
             }
-            SDL_Flip(ecran);
             break;
         }
+        SDL_Flip(ecran);
     }
     liberer_save(&s);
-    SDL_FreeSurface(ecran);
-    SDL_Quit();
 }

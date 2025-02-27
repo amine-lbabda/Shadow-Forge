@@ -31,6 +31,5 @@ TTF_Font *load_font(char *name, int size);
 
 void couleur_text(SDL_Color *color, int r, int g, int b);
 
-void liberer(SDL_Surface *ecran, SDL_Surface *background, SDL_Surface *button_mono, SDL_Surface *button_multi, SDL_Surface *button_name_1, SDL_Surface *button_name_2, TTF_Font *font);
-SDL_Surface *initialiser(int w, int h);
-void menu_mode(SDL_Surface *ecran);
+void liberer(SDL_Surface *background, SDL_Surface *button_mono, SDL_Surface *button_multi, SDL_Surface *button_name_1, SDL_Surface *button_name_2, TTF_Font *font);
+void menu_mode(SDL_Surface *ecran, int *run);

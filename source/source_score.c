@@ -59,11 +59,13 @@ int mousehover(SDL_Rect pos)
 	return (mouseX >= pos.x && mouseX <= pos.x + pos.w &&
 			mouseY >= pos.y && mouseY <= pos.y + pos.h);
 }
-void liberer2(SDL_Surface *image, Mix_Music *musique, TTF_Font *font, Mix_Chunk *tick)
+void liberer2(SDL_Surface *image, TTF_Font *font, Mix_Chunk *tick, int run)
 {
 	Mix_FreeChunk(tick);
-	Mix_FreeMusic(musique);
 	Mix_CloseAudio();
 	SDL_FreeSurface(image);
-	TTF_CloseFont(font);
+	if (run != 0)
+	{
+		TTF_CloseFont(font);
+	}
 }

@@ -38,5 +38,5 @@ void miseajour(save *s);
 void miseajour_sous_menu(save *s);
 void afficher_sous_menu(save s, SDL_Surface *ecran);
 void liberer_save(save *s);
-void chargement(SDL_Surface *ecran);
+void chargement(SDL_Surface *ecran, int *run);
 #endif // SAVE_H

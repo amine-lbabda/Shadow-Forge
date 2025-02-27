@@ -5,9 +5,17 @@
 #include <SDL/SDL_ttf.h>
 #include "menu.h"
 #include "quiz.h"
-void score2(SDL_Surface *ecran)
+void score2(SDL_Surface *ecran, int *run)
 {
 	int show_new_interface = 0;
+	int mouseX, mouseY;
+	int inside_button;
+	int inside_button2;
+	int inside_confirm;
+	int inside_return;
+	Uint8 mouseState;
+	SDL_Surface *current_button;
+	SDL_Surface *current_button2;
 	SDL_Surface *image, *button, *buttons, *button2, *buttons2, *re = NULL;
 	SDL_Surface *text = NULL;
 	TTF_Font *font = TTF_OpenFont("../assets/fonts/HARRYP.ttf", 60);
@@ -18,7 +26,7 @@ void score2(SDL_Surface *ecran)
 	SDL_Color Color;
 	SDL_Event event;
 	Mix_Music *musique;
-	Mix_Chunk *tick;
+	Mix_Chunk *tick = NULL;
 	SDL_Surface *button_hover, *button2_hover;
 	SDL_Surface *text_return = NULL;
 	SDL_Surface *text_return_hover = NULL;
@@ -28,7 +36,6 @@ void score2(SDL_Surface *ecran)
 	SDL_Surface *text_name = NULL;
 	SDL_Color white = {255, 255, 255};
 	SDL_Color red = {255, 0, 0};
-	TTF_Init();
 	posre.x = 100;
 	posre.y = 980;
 	posconf.x = 1700;
@@ -55,92 +62,91 @@ void score2(SDL_Surface *ecran)
 	text_score = TTF_RenderText_Solid(font, "SCORE", white);
 	font = affichage_name("../assets/fonts/HARRYP.ttf");
 	text_name = TTF_RenderText_Solid(font, "NICKNAME", white);
-
+	tick = Mix_LoadWAV("../assets/audio/tick.wav");
 	if (!text_return || !text_confirm || !text_score)
 	{
 		printf("Error rendering text: %s\n", TTF_GetError());
 	}
-	while (quitter)
+	while (quitter && *run)
 	{
-		SDL_PollEvent(&event);
-		switch (event.type)
+		while (SDL_PollEvent(&event) && quitter && *run)
 		{
-		case SDL_QUIT:
-			quitter = 0;
-			break;
-		}
-
-		int mouseX, mouseY;
-		Uint8 mouseState = SDL_GetMouseState(&mouseX, &mouseY);
-
-		int inside_button = mousehover(posb);
-
-		int inside_button2 = mousehover(posb2);
-		SDL_Surface *current_button2 = inside_button2 ? button2_hover : button2;
-		int inside_confirm = mousehover(posconf);
-
-		int inside_return = mousehover(posre);
-		if (mouseState & SDL_BUTTON(SDL_BUTTON_LEFT))
-		{
-			if (inside_confirm && !show_new_interface)
+			switch (event.type)
 			{
-
-				SDL_FreeSurface(image);
-				musique = Mix_LoadMUS("../assets/theme.mp3");
-
-				Mix_PlayMusic(musique, 0);
-				image = affichage("../assets/backgrounds/bgscore.jpg", &posbg);
-				Mix_LoadWAV("../assets/audio/tick.wav");
-				Mix_PlayChannel(-1, tick, 0);
-				show_new_interface = 1;
-			}
-			else if (inside_confirm && show_new_interface == 1)
+			case SDL_QUIT:
+				quitter = 0;
+				*run = 0;
+				break;
+			case SDL_KEYDOWN:
 			{
-				menu_quiz(ecran);
-			}
-
-			if (inside_return && (show_new_interface > 0))
-			{
-				SDL_FreeSurface(image);
-				image = affichage("../assets/backgrounds/bgscore.jpg", &posbg);
-				Mix_FreeMusic(musique);
-				show_new_interface = 0;
-			}
-			if (inside_return && (show_new_interface == 0))
-			{
-				Menu(ecran);
-			}
-		}
-		switch (event.type)
-		{
-		case SDL_KEYDOWN:
-			if (event.key.keysym.sym == SDLK_e)
-			{
-				menu_quiz(ecran);
+				if (event.key.keysym.sym == SDLK_e)
+				{
+					menu_quiz(ecran, run);
+				}
+				if (event.key.keysym.sym == SDLK_ESCAPE)
+				{
+					quitter = 0;
+					*run = 0;
+				}
 			}
 			break;
-		}
+			}
+			if (quitter && *run)
+			{
+				mouseState = SDL_GetMouseState(&mouseX, &mouseY);
+				inside_button = mousehover(posb);
+				inside_button2 = mousehover(posb2);
+				current_button2 = inside_button2 ? button2_hover : button2;
+				inside_confirm = mousehover(posconf);
+				inside_return = mousehover(posre);
+				if (mouseState && SDL_BUTTON(SDL_BUTTON_LEFT))
+				{
+					if (inside_confirm && !show_new_interface)
+					{
 
-		SDL_Surface *current_button = inside_button ? button_hover : button;
+						SDL_FreeSurface(image);
+						image = affichage("../assets/backgrounds/bgscore.jpg", &posbg);
+						Mix_PlayChannel(-1, tick, 0);
+						show_new_interface = 1;
+					}
+					else if (inside_confirm || show_new_interface == 1)
+					{
+						menu_quiz(ecran, run);
+					}
 
-		afficher_ecran(image, &posbg, ecran);
-		if (show_new_interface)
-		{
-			SDL_BlitSurface(inside_return ? text_return_hover : text_return, NULL, ecran, &posre);
-			SDL_BlitSurface(inside_confirm ? text_confirm_hover : text_confirm, NULL, ecran, &posconf);
-			afficher_ecran(current_button2, &posb2, ecran);
-			SDL_BlitSurface(text_score, NULL, ecran, &posscore);
-		}
-		else
-		{
-			afficher_ecran(current_button, &posb, ecran);
-			SDL_BlitSurface(inside_return ? text_return_hover : text_return, NULL, ecran, &posre);
-			SDL_BlitSurface(inside_confirm ? text_confirm_hover : text_confirm, NULL, ecran, &posconf);
-			SDL_BlitSurface(text_name, NULL, ecran, &posname);
-		}
+					if (inside_return && (show_new_interface == 0))
+					{
+						SDL_FreeSurface(image);
+						image = affichage("../assets/backgrounds/bgscore.jpg", &posbg);
+						Mix_FreeMusic(musique);
+						show_new_interface = 0;
+					}
+					if (inside_return && (show_new_interface == 0))
+					{
+						quitter = 0;
+					}
+				}
+				current_button = inside_button ? button_hover : button;
 
-		SDL_Flip(ecran);
+				afficher_ecran(image, &posbg, ecran);
+				if (show_new_interface)
+				{
+					SDL_BlitSurface(inside_return ? text_return_hover : text_return, NULL, ecran, &posre);
+					SDL_BlitSurface(inside_confirm ? text_confirm_hover : text_confirm, NULL, ecran, &posconf);
+					afficher_ecran(current_button2, &posb2, ecran);
+					SDL_BlitSurface(text_score, NULL, ecran, &posscore);
+				}
+				else
+				{
+					afficher_ecran(current_button, &posb, ecran);
+					SDL_BlitSurface(inside_return ? text_return_hover : text_return, NULL, ecran, &posre);
+					SDL_BlitSurface(inside_confirm ? text_confirm_hover : text_confirm, NULL, ecran, &posconf);
+					SDL_BlitSurface(text_name, NULL, ecran, &posname);
+				}
+				SDL_Flip(ecran);
+			}
+		}
 	}
 
-	liberer2(image, musique, font, tick);
+	liberer2(image, font, tick, *run);
 }

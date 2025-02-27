@@ -3,7 +3,7 @@
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
 #include "quiz.h"
-void menu_quiz(SDL_Surface *ecran)
+void menu_quiz(SDL_Surface *ecran, int *run)
 {
     int quitter = 0;
     SDL_Event event;
@@ -31,13 +31,15 @@ void menu_quiz(SDL_Surface *ecran)
             {
             case SDL_QUIT:
                 quitter = 1;
+                *run = 0;
                 break;
             case SDL_KEYDOWN:
             {
                 if (event.key.keysym.sym == SDLK_ESCAPE)
                 {
                     quitter = 1;
-                } 
+                    *run = 0;
+                }
             }
             break;
             case SDL_MOUSEBUTTONDOWN:
@@ -60,7 +62,10 @@ void menu_quiz(SDL_Surface *ecran)
                 break;
             }
         }
-        update(&m);
+        if (*run)
+        {
+            update(&m);
+        }
     }
     cleanup(&m, &q);
 }

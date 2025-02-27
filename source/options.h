@@ -5,15 +5,16 @@
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
-typedef struct image {
+typedef struct image
+{
     SDL_Surface *image;
     SDL_Rect rect;
 } image;
-typedef struct text {
+typedef struct text
+{
     TTF_Font *font;
     SDL_Surface *text;
     SDL_Rect rectx;
 } text;
 int verif_collision_2(SDL_Event e, image button);
-void getDesktopResolution(int *width, int *height);
-void menu_options(SDL_Surface *window);
+void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolume, int *run);
