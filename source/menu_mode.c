@@ -103,9 +103,9 @@ void menu_mode(SDL_Surface *ecran, int *run)
 				position_image(320, 540, 69, 379, &button_mono_text.postext);
 				position_image(320, 710, 434, 77, &button_multi_text.postext);
 				Mix_PlayMusic(music_theme, -1);
-				while (quitter == 0)
+				while (quitter == 0 && *run)
 				{
-					if (menu_mode == 0)
+					if (menu_mode == 0 && *run)
 					{
 						afficher(background.image, NULL, ecran, &background.posimage);
 						afficher(button_mono.image, NULL, ecran, &button_mono.posimage);
@@ -126,7 +126,7 @@ void menu_mode(SDL_Surface *ecran, int *run)
 							afficher(button_name_1.image, NULL, ecran, &button_name_1.posimage);
 							aficher_text(button_name_1_text.text, &button_name_1_text.postext, ecran);
 						}
-						if (affiche_multi == 1)
+						if (affiche_multi == 1 && *run)
 						{
 							button_name_1_text.text = affichage_text(button_mono_text.font, "NAME 1", button_mono_text.textcouleur);
 							position_image(400, 535, 578, 126, &button_name_1_text.postext);
@@ -140,11 +140,11 @@ void menu_mode(SDL_Surface *ecran, int *run)
 							aficher_text(button_name_2_text.text, &button_name_2_text.postext, ecran);
 						}
 					}
-					if (confirm == 1)
+					if (confirm == 1 && *run)
 					{
 						afficher(confirm_image.image, NULL, ecran, &confirm_image.posimage);
 					}
-					while (SDL_PollEvent(&e) && quitter == 0)
+					while (SDL_PollEvent(&e) && quitter == 0 && *run)
 					{
 						switch (e.type)
 						{

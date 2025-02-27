@@ -25,7 +25,7 @@ void menu_quiz(SDL_Surface *ecran, int *run)
             afficher_quiz(q, ecran);
             break;
         }
-        while (SDL_PollEvent(&event))
+        while (SDL_PollEvent(&event) && *run)
         {
             switch (event.type)
             {

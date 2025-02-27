@@ -1,7 +1,5 @@
 #include "menu.h"
 
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
 #include "save.h"
 #include "score.h"
 #include "options.h"
@@ -9,15 +7,16 @@
 void Menu(SDL_Surface *screen)
 {
     int initalVolume = MIX_MAX_VOLUME;
-    SDL_Surface *background = NULL, *logo = NULL, *play = NULL, *options = NULL, *scores = NULL, *quit = NULL, *flip = NULL;
+    SDL_Surface *background = NULL, *logo = NULL, *play = NULL, *options = NULL, *scores = NULL, *quit = NULL, *flip = NULL, *text_group = NULL, *team_member = NULL, *team_member1 = NULL, *team_member2 = NULL, *team_member3 = NULL, *team_member4 = NULL, *team_member5 = NULL, *team_member6 = NULL;
     SDL_Event event;
     Mix_Chunk *son;
     Mix_Music *music;
-    SDL_Rect positionBackground, positionLogo, positionPlay, positionOptions, positionScores, positionQuit;
+    SDL_Rect positionBackground, positionLogo, positionPlay, positionOptions, positionScores, positionQuit, positionGroupText, positionTeamText, pos1, pos2, pos3, pos4, pos5, pos6;
+    SDL_Color coleur_text;
+    TTF_Font *font = NULL;
     int run = 1;
     int hover = 0;
     int cursPosition = -1, mouseCurs = -1;
-    Uint32 start;
     music = Mix_LoadMUS("../assets/audio/river.mp3");
     son = Mix_LoadWAV("../assets/audio/click.wav");
     Mix_PlayMusic(music, -1);
@@ -28,8 +27,58 @@ void Menu(SDL_Surface *screen)
     scores = IMG_Load("../assets/buttons/scores.png");
     quit = IMG_Load("../assets/buttons/exit.png");
     flip = IMG_Load("../assets/buttons/flip.png");
+    font = TTF_OpenFont("../assets/fonts/aa.ttf", 60);
+    coleur_text.r = 255;
+    coleur_text.g = 255;
+    coleur_text.b = 255;
+    text_group = TTF_RenderText_Blended(font, "MADE BY:DIVINE VENDETTA", coleur_text);
+    team_member = TTF_RenderText_Blended(font, "TEAM MEMBERS: ", coleur_text);
+    team_member1 = TTF_RenderText_Blended(font, "FATMA EL MILI", coleur_text);
+    team_member2 = TTF_RenderText_Blended(font, "DHIA SELLINI", coleur_text);
+    team_member3 = TTF_RenderText_Blended(font, "MALIK ABASSI", coleur_text);
+    team_member4 = TTF_RenderText_Blended(font, "WIEM BEN HSOUNA", coleur_text);
+    team_member5 = TTF_RenderText_Blended(font, "RASLEN NEJI", coleur_text);
+    team_member6 = TTF_RenderText_Blended(font, "MOHAMED AMINE LBABDA", coleur_text);
 
-    SDL_EnableKeyRepeat(10, 10);
+    positionGroupText.x = 900;
+    positionGroupText.y = 400;
+    positionGroupText.w = text_group->w;
+    positionGroupText.h = text_group->h;
+
+    positionTeamText.x = 900;
+    positionTeamText.y = 500;
+    positionTeamText.w = text_group->w;
+    positionTeamText.h = text_group->h;
+
+    pos1.x = 900;
+    pos1.y = 570;
+    pos1.w = team_member1->w;
+    pos1.h = team_member1->h;
+
+    pos2.x = 900;
+    pos2.y = 600;
+    pos2.w = team_member2->w;
+    pos2.h = team_member2->h;
+
+    pos3.x = 900;
+    pos3.y = 700;
+    pos3.w = team_member3->w;
+    pos3.h = team_member3->h;
+
+    pos4.x = 900;
+    pos4.y = 750;
+    pos4.w = team_member4->w;
+    pos4.h = team_member4->h;
+
+    pos5.x = 900;
+    pos5.y = 820;
+    pos5.w = team_member5->w;
+    pos5.h = team_member5->h;
+
+    pos6.x = 900;
+    pos6.y = 900;
+    pos6.w = team_member6->w;
+    pos6.h = team_member6->h;
 
     positionBackground.x = 0;
     positionBackground.y = 0;
@@ -52,9 +101,9 @@ void Menu(SDL_Surface *screen)
     positionQuit.x = 80;
     positionQuit.y = 460;
     SDL_WM_SetCaption("Menu", NULL);
+    SDL_EnableKeyRepeat(10, 10);
     while (run)
     {
-        start = SDL_GetTicks();
         hover = 0;
 
         while (SDL_PollEvent(&event) && run)
@@ -65,6 +114,14 @@ void Menu(SDL_Surface *screen)
             SDL_BlitSurface(scores, NULL, screen, &positionScores);
             SDL_BlitSurface(options, NULL, screen, &positionOptions);
             SDL_BlitSurface(quit, NULL, screen, &positionQuit);
+            SDL_BlitSurface(text_group, NULL, screen, &positionGroupText);
+            SDL_BlitSurface(team_member, NULL, screen, &positionTeamText);
+            SDL_BlitSurface(team_member1, NULL, screen, &pos1);
+            SDL_BlitSurface(team_member2, NULL, screen, &pos2);
+            SDL_BlitSurface(team_member3, NULL, screen, &pos3);
+            SDL_BlitSurface(team_member4, NULL, screen, &pos4);
+            SDL_BlitSurface(team_member5, NULL, screen, &pos5);
+            SDL_BlitSurface(team_member6, NULL, screen, &pos6);
             switch (event.type)
             {
             case SDL_QUIT:
@@ -238,10 +295,6 @@ void Menu(SDL_Surface *screen)
             SDL_Flip(screen);
             Mix_VolumeMusic(initalVolume);
             Mix_VolumeChunk(son, initalVolume);
-            if (1000 / FPS > SDL_GetTicks() - start)
-            {
-                SDL_Delay(1000 / FPS - (SDL_GetTicks() - start));
-            }
         }
     }
 
@@ -254,6 +307,16 @@ void Menu(SDL_Surface *screen)
     SDL_FreeSurface(scores);
     SDL_FreeSurface(quit);
     SDL_FreeSurface(flip);
+    SDL_FreeSurface(logo);
+    SDL_FreeSurface(text_group);
+    SDL_FreeSurface(team_member);
+    SDL_FreeSurface(team_member1);
+    SDL_FreeSurface(team_member2);
+    SDL_FreeSurface(team_member3);
+    SDL_FreeSurface(team_member4);
+    SDL_FreeSurface(team_member5);
+    SDL_FreeSurface(team_member6);
+    TTF_CloseFont(font);
     TTF_Quit();
     Mix_CloseAudio();
     SDL_Quit();
