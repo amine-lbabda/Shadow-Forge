@@ -47,7 +47,7 @@ void menu_mode(SDL_Surface *ecran, int *run)
 		music_theme = Mix_LoadMUS("../assets/audio/theme_menu.mp3");
 		music_click = Mix_LoadWAV("../assets/audio/click_menu.wav");
 		background.image = load_image("../assets/backgrounds/bg_secondaire.png");
-		background_secondaire.image = load_image("../assets/backgrounds/choix_avatar.png");
+		background_secondaire.image = load_image("../assets/backgrounds/bg_secondaire.png");
 		button_mono.image = load_image("../assets/buttons/button_1.png");
 		button_multi.image = load_image("../assets/buttons/button_1.png");
 		button_clicked.image = load_image("../assets/buttons/button_clicked.png");

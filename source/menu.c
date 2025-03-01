@@ -27,7 +27,11 @@ void Menu(SDL_Surface *screen)
     scores = IMG_Load("../assets/buttons/scores.png");
     quit = IMG_Load("../assets/buttons/exit.png");
     flip = IMG_Load("../assets/buttons/flip.png");
-    font = TTF_OpenFont("../assets/fonts/aa.ttf", 60);
+    font = TTF_OpenFont("../assets/fonts/HARRYP.TTF", 60);
+    if (font == NULL) {
+        fprintf(stderr, "Failed to load font: %s\n", TTF_GetError());
+        return;
+    }
     coleur_text.r = 255;
     coleur_text.g = 255;
     coleur_text.b = 255;

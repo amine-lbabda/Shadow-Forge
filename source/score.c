@@ -18,7 +18,7 @@ void score2(SDL_Surface *ecran, int *run)
 	SDL_Surface *current_button2;
 	SDL_Surface *image, *button, *buttons, *button2, *buttons2, *re = NULL;
 	SDL_Surface *text = NULL;
-	TTF_Font *font = TTF_OpenFont("../assets/fonts/HARRYP.ttf", 60);
+	TTF_Font *font = NULL;
 	int quitter = 1;
 	SDL_Rect posbg;
 	SDL_Rect posb, posb2, pos2;
@@ -52,15 +52,15 @@ void score2(SDL_Surface *ecran, int *run)
 	button_hover = affichageb("../assets/buttons/buttons.png", &posb);
 	button2_hover = affichageb2("../assets/buttons/buttons2.png", &posb2);
 
-	font = affichage_text2("../assets/fonts/HARRYP.ttf");
+	font = affichage_text2("../assets/fonts/HARRYP.TTF");
 
 	text_return = TTF_RenderText_Solid(font, "RETURN", white);
 	text_return_hover = TTF_RenderText_Solid(font, "RETURN", red);
 	text_confirm = TTF_RenderText_Solid(font, "CONFIRM", white);
 	text_confirm_hover = TTF_RenderText_Solid(font, "CONFIRM", red);
-	font = affichage_score("../assets/fonts/HARRYP.ttf");
+	font = affichage_score("../assets/fonts/HARRYP.TTF");
 	text_score = TTF_RenderText_Solid(font, "SCORE", white);
-	font = affichage_name("../assets/fonts/HARRYP.ttf");
+	font = affichage_name("../assets/fonts/HARRYP.TTF");
 	text_name = TTF_RenderText_Solid(font, "NICKNAME", white);
 	tick = Mix_LoadWAV("../assets/audio/tick.wav");
 	if (!text_return || !text_confirm || !text_score)
