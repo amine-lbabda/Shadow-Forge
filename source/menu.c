@@ -1,5 +1,4 @@
 #include "menu.h"
-
 #include "save.h"
 #include "score.h"
 #include "options.h"
@@ -36,7 +35,7 @@ void Menu(SDL_Surface *screen)
     coleur_text.g = 255;
     coleur_text.b = 255;
     text_group = TTF_RenderText_Blended(font, "MADE BY:DIVINE VENDETTA", coleur_text);
-    team_member = TTF_RenderText_Blended(font, "TEAM MEMBERS: ", coleur_text);
+    team_member = TTF_RenderText_Blended(font, "TEAM MEMBERS:", coleur_text);
     team_member1 = TTF_RenderText_Blended(font, "FATMA EL MILI", coleur_text);
     team_member2 = TTF_RenderText_Blended(font, "DHIA SELLINI", coleur_text);
     team_member3 = TTF_RenderText_Blended(font, "MALIK ABASSI", coleur_text);
@@ -75,7 +74,7 @@ void Menu(SDL_Surface *screen)
     pos4.h = team_member4->h;
 
     pos5.x = 900;
-    pos5.y = 820;
+    pos5.y = 830;
     pos5.w = team_member5->w;
     pos5.h = team_member5->h;
 

@@ -1,5 +1,4 @@
-#ifndef SAVE_H
-#define SAVE_H
+#pragma once
 
 typedef struct
 {
@@ -39,4 +38,3 @@ void miseajour_sous_menu(save *s);
 void afficher_sous_menu(save s, SDL_Surface *ecran);
 void liberer_save(save *s);
 void chargement(SDL_Surface *ecran, int *run);
-#endif // SAVE_H

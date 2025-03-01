@@ -1,5 +1,4 @@
-#ifndef MENU_H_INCLUDED
-#define MENU_H_INCLUDED
+#pragma once
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
@@ -35,4 +34,3 @@ void afficher_quiz(quiz, SDL_Surface *ecran);
 void init_quiz(quiz *);
 void cleanup(menu *m, quiz *q);
 void menu_quiz(SDL_Surface *ecran, int *run);
-#endif
