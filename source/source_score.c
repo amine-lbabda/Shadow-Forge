@@ -62,7 +62,6 @@ int mousehover(SDL_Rect pos)
 void liberer2(SDL_Surface *image, TTF_Font *font, Mix_Chunk *tick, int run)
 {
 	Mix_FreeChunk(tick);
-	Mix_CloseAudio();
 	SDL_FreeSurface(image);
 	if (run != 0)
 	{

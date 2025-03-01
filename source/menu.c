@@ -2,7 +2,6 @@
 #include "save.h"
 #include "score.h"
 #include "options.h"
-#define FPS 60
 void Menu(SDL_Surface *screen)
 {
     int initalVolume = MIX_MAX_VOLUME;
