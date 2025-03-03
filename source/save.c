@@ -270,5 +270,5 @@ void liberer_save(save *s)
     TTF_CloseFont(s->font_question);
     Mix_FreeMusic(s->continu);
     Mix_FreeChunk(s->hover_sound);
-    Mix_CloseAudio();
+    // Mix_CloseAudio();
 }

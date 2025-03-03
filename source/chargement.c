@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
@@ -7,7 +6,7 @@
 #include "save.h"
 #include "menu_mode.h"
 #include "menu.h"
-void chargement(SDL_Surface *ecran, int *run)
+void chargement(SDL_Surface *ecran, int *run, int *initial_menu)
 {
     SDL_Event event;
     save s;
@@ -80,11 +79,14 @@ void chargement(SDL_Surface *ecran, int *run)
                         if (s.btn_select == 4)
                         {
                             printf("New Game sélectionné\n");
-                            menu_mode(ecran, run);
+                            menu_mode(ecran, run, initial_menu);
+                            Mix_FreeMusic(s.continu);
+                            s.continu = Mix_LoadMUS("../assets/audio/theme2.mp3");
+                            Mix_PlayMusic(s.continu, -1);
                         }
                         if (s.btn_select == 5)
                         {
-                            indice = 0;
+                            quitter = 0;
                         }
                     }
                     break;
@@ -92,7 +94,7 @@ void chargement(SDL_Surface *ecran, int *run)
                 {
                     if (event.key.keysym.sym == SDLK_n)
                     {
-                        menu_mode(ecran, run);
+                        menu_mode(ecran, run, initial_menu);
                     }
                 }
                 }
@@ -103,4 +105,5 @@ void chargement(SDL_Surface *ecran, int *run)
         SDL_Flip(ecran);
     }
     liberer_save(&s);
+    *initial_menu = 0;
 }

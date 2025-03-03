@@ -5,7 +5,7 @@
 #include <SDL/SDL_ttf.h>
 #include "menu.h"
 #include "quiz.h"
-void score2(SDL_Surface *ecran, int *run)
+void score2(SDL_Surface *ecran, int *run, int *initial_menu)
 {
 	int show_new_interface = 0;
 	int mouseX, mouseY;
@@ -149,4 +149,5 @@ void score2(SDL_Surface *ecran, int *run)
 	}
 
 	liberer2(image, font, tick, *run);
+	*initial_menu = 0;
 }

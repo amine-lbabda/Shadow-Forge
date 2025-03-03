@@ -57,6 +57,5 @@ void liberer(SDL_Surface *background, SDL_Surface *button_mono, SDL_Surface *but
     SDL_FreeSurface(button_multi);
     SDL_FreeSurface(button_name_1);
     SDL_FreeSurface(button_name_2);
-    Mix_CloseAudio();
     TTF_CloseFont(font);
 }

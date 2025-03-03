@@ -4,20 +4,20 @@
 #include "options.h"
 void Menu(SDL_Surface *screen)
 {
+    int initialMenu = 0;
     int initalVolume = MIX_MAX_VOLUME;
-    SDL_Surface *background = NULL, *logo = NULL, *play = NULL, *options = NULL, *scores = NULL, *quit = NULL, *flip = NULL, *text_group = NULL, *team_member = NULL, *team_member1 = NULL, *team_member2 = NULL, *team_member3 = NULL, *team_member4 = NULL, *team_member5 = NULL, *team_member6 = NULL;
+    SDL_Surface *background = NULL, *logo = NULL, *play = NULL, *options = NULL, *scores = NULL, *quit = NULL, *flip = NULL, *text_group = NULL, *menu_text = NULL;
     SDL_Event event;
     Mix_Chunk *son;
     Mix_Music *music;
-    SDL_Rect positionBackground, positionLogo, positionPlay, positionOptions, positionScores, positionQuit, positionGroupText, positionTeamText, pos1, pos2, pos3, pos4, pos5, pos6;
+    SDL_Rect positionBackground, positionLogo, positionPlay, positionOptions, positionScores, positionQuit, positionGroupText, positionTeamText;
     SDL_Color coleur_text;
-    TTF_Font *font = NULL;
+    TTF_Font *font = NULL, *font_menu = NULL;
     int run = 1;
     int hover = 0;
     int cursPosition = -1, mouseCurs = -1;
     music = Mix_LoadMUS("../assets/audio/river.mp3");
     son = Mix_LoadWAV("../assets/audio/click.wav");
-    Mix_PlayMusic(music, -1);
     background = IMG_Load("../assets/backgrounds/background_f.png");
     logo = IMG_Load("../assets/buttons/logo.png");
     play = IMG_Load("../assets/buttons/play.png");
@@ -25,90 +25,49 @@ void Menu(SDL_Surface *screen)
     scores = IMG_Load("../assets/buttons/scores.png");
     quit = IMG_Load("../assets/buttons/exit.png");
     flip = IMG_Load("../assets/buttons/flip.png");
-    font = TTF_OpenFont("../assets/fonts/HARRYP.TTF", 60);
-    if (font == NULL) {
+    font = TTF_OpenFont("../assets/fonts/HARRYP.TTF", 40);
+    font_menu = TTF_OpenFont("../assets/fonts/HARRYP.TTF", 60);
+    if ((font == NULL) || (font_menu == NULL))
+    {
         fprintf(stderr, "Failed to load font: %s\n", TTF_GetError());
-        return;
     }
     coleur_text.r = 255;
     coleur_text.g = 255;
     coleur_text.b = 255;
     text_group = TTF_RenderText_Blended(font, "MADE BY:DIVINE VENDETTA", coleur_text);
-    team_member = TTF_RenderText_Blended(font, "TEAM MEMBERS:", coleur_text);
-    team_member1 = TTF_RenderText_Blended(font, "FATMA EL MILI", coleur_text);
-    team_member2 = TTF_RenderText_Blended(font, "DHIA SELLINI", coleur_text);
-    team_member3 = TTF_RenderText_Blended(font, "MALIK ABASSI", coleur_text);
-    team_member4 = TTF_RenderText_Blended(font, "WIEM BEN HSOUNA", coleur_text);
-    team_member5 = TTF_RenderText_Blended(font, "RASLEN NEJI", coleur_text);
-    team_member6 = TTF_RenderText_Blended(font, "MOHAMED AMINE LBABDA", coleur_text);
+    menu_text = TTF_RenderText_Blended(font_menu, "MENU", coleur_text);
 
-    positionGroupText.x = 900;
-    positionGroupText.y = 400;
+    positionGroupText.x = 1400;
+    positionGroupText.y = 1020;
     positionGroupText.w = text_group->w;
     positionGroupText.h = text_group->h;
-
     positionTeamText.x = 900;
     positionTeamText.y = 500;
     positionTeamText.w = text_group->w;
     positionTeamText.h = text_group->h;
-
-    pos1.x = 900;
-    pos1.y = 570;
-    pos1.w = team_member1->w;
-    pos1.h = team_member1->h;
-
-    pos2.x = 900;
-    pos2.y = 600;
-    pos2.w = team_member2->w;
-    pos2.h = team_member2->h;
-
-    pos3.x = 900;
-    pos3.y = 700;
-    pos3.w = team_member3->w;
-    pos3.h = team_member3->h;
-
-    pos4.x = 900;
-    pos4.y = 750;
-    pos4.w = team_member4->w;
-    pos4.h = team_member4->h;
-
-    pos5.x = 900;
-    pos5.y = 830;
-    pos5.w = team_member5->w;
-    pos5.h = team_member5->h;
-
-    pos6.x = 900;
-    pos6.y = 900;
-    pos6.w = team_member6->w;
-    pos6.h = team_member6->h;
 
     positionBackground.x = 0;
     positionBackground.y = 0;
 
     positionLogo.x = 1100;
     positionLogo.y = 40;
-
+    positionTeamText.x = 120;
+    positionTeamText.y = 100;
     positionPlay.x = 80;
     positionPlay.y = 220;
 
     positionScores.x = 80;
     positionScores.y = 300;
-    if (event.key.keysym.sym == SDLK_ESCAPE)
-    {
-        run = 0;
-    }
     positionOptions.x = 80;
     positionOptions.y = 380;
 
     positionQuit.x = 80;
     positionQuit.y = 460;
+    Mix_PlayMusic(music, -1);
     SDL_WM_SetCaption("Menu", NULL);
-    SDL_EnableKeyRepeat(10, 10);
     while (run)
     {
-        hover = 0;
-
-        while (SDL_PollEvent(&event) && run)
+        if (initialMenu == 0)
         {
             SDL_BlitSurface(background, NULL, screen, &positionBackground);
             SDL_BlitSurface(logo, NULL, screen, &positionLogo);
@@ -117,13 +76,35 @@ void Menu(SDL_Surface *screen)
             SDL_BlitSurface(options, NULL, screen, &positionOptions);
             SDL_BlitSurface(quit, NULL, screen, &positionQuit);
             SDL_BlitSurface(text_group, NULL, screen, &positionGroupText);
-            SDL_BlitSurface(team_member, NULL, screen, &positionTeamText);
-            SDL_BlitSurface(team_member1, NULL, screen, &pos1);
-            SDL_BlitSurface(team_member2, NULL, screen, &pos2);
-            SDL_BlitSurface(team_member3, NULL, screen, &pos3);
-            SDL_BlitSurface(team_member4, NULL, screen, &pos4);
-            SDL_BlitSurface(team_member5, NULL, screen, &pos5);
-            SDL_BlitSurface(team_member6, NULL, screen, &pos6);
+            SDL_BlitSurface(menu_text, NULL, screen, &positionTeamText);
+        }
+        else if (initialMenu == 1)
+        {
+            chargement(screen, &run, &initialMenu);
+            Mix_FreeMusic(music);
+            music = Mix_LoadMUS("../assets/audio/river.mp3");
+            Mix_PlayMusic(music, -1);
+        }
+        else if (initialMenu == 2)
+        {
+
+            score2(screen, &run, &initialMenu);
+            Mix_FreeMusic(music);
+            music = Mix_LoadMUS("../assets/audio/river.mp3");
+            Mix_PlayMusic(music, -1);
+        }
+        else
+        {
+            menu_options(screen, music, &initalVolume, &run, &initialMenu);
+            Mix_FreeMusic(music);
+            music = Mix_LoadMUS("../assets/audio/river.mp3");
+            Mix_PlayMusic(music, -1);
+        }
+        hover = 0;
+
+        while (SDL_PollEvent(&event) && run)
+        {
+
             switch (event.type)
             {
             case SDL_QUIT:
@@ -181,15 +162,18 @@ void Menu(SDL_Surface *screen)
                 }
                 if (event.key.keysym.sym == SDLK_j && run)
                 {
-                    chargement(screen, &run);
+                    //
+                    initialMenu = 1;
                 }
                 if (event.key.keysym.sym == SDLK_o && run)
                 {
-                    menu_options(screen, music, &initalVolume, &run);
+                    //
+                    initialMenu = 2;
                 }
                 if (event.key.keysym.sym == SDLK_m && run)
                 {
-                    score2(screen, &run);
+                    //
+                    initialMenu = 3;
                 }
             }
             break;
@@ -201,19 +185,22 @@ void Menu(SDL_Surface *screen)
                     {
                         buttonMoition(positionPlay, screen, flip);
                         Mix_PlayChannel(-1, son, 0);
-                        chargement(screen, &run);
+
+                        initialMenu = 1;
                     }
                     if (event.button.x >= 80 && event.button.x <= 355 && event.button.y >= 300 && event.button.y <= 355 && run)
                     {
                         buttonMoition(positionScores, screen, flip);
                         Mix_PlayChannel(-1, son, 0);
-                        score2(screen, &run);
+
+                        initialMenu = 2;
                     }
                     if (event.button.x >= 80 && event.button.x <= 355 && event.button.y >= 380 && event.button.y <= 435 && run)
                     {
                         buttonMoition(positionOptions, screen, flip);
                         Mix_PlayChannel(-1, son, 0);
-                        menu_options(screen, music, &initalVolume, &run);
+
+                        initialMenu = 3;
                     }
                     if (event.button.x >= 80 && event.button.x <= 355 && event.button.y >= 460 && event.button.y <= 515 && run)
                     {
@@ -311,13 +298,7 @@ void Menu(SDL_Surface *screen)
     SDL_FreeSurface(flip);
     SDL_FreeSurface(logo);
     SDL_FreeSurface(text_group);
-    SDL_FreeSurface(team_member);
-    SDL_FreeSurface(team_member1);
-    SDL_FreeSurface(team_member2);
-    SDL_FreeSurface(team_member3);
-    SDL_FreeSurface(team_member4);
-    SDL_FreeSurface(team_member5);
-    SDL_FreeSurface(team_member6);
+    SDL_FreeSurface(menu_text);
     TTF_CloseFont(font);
     TTF_Quit();
     Mix_CloseAudio();

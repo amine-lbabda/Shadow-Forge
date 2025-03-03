@@ -6,7 +6,7 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
-void menu_mode(SDL_Surface *ecran, int *run)
+void menu_mode(SDL_Surface *ecran, int *run, int *initial_menu)
 {
 	Mix_Music *music_theme;
 	Mix_Chunk *music_click;
@@ -244,7 +244,7 @@ void menu_mode(SDL_Surface *ecran, int *run)
 							}
 							if (confirm_score == 1 && verif_collision(e, confirm_image))
 							{
-								score2(ecran, run);
+								score2(ecran, run, initial_menu);
 							}
 						}
 						break;

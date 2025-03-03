@@ -4,7 +4,7 @@
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
-void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolume, int *run)
+void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolume, int *run, int *initial_menu)
 {
     image background;
     image btn1;
@@ -208,7 +208,6 @@ void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolum
         SDL_Quit();
     }
 
-    Mix_VolumeMusic(*currentVolume);
     while (!quit)
     {
         while (SDL_PollEvent(&e) && !quit)
@@ -231,7 +230,7 @@ void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolum
                     if (*currentVolume > MIX_MAX_VOLUME)
                         *currentVolume = MIX_MAX_VOLUME;
                     Mix_VolumeMusic(*currentVolume);
-                    printf("Volume Increased: %d%%\n", ((*currentVolume) * 100) / MIX_MAX_VOLUME);
+                    printf("Volume Increased: %d\n", ((*currentVolume) * 100) / MIX_MAX_VOLUME);
                 }
 
                 if (verif_collision_2(e, volm))
@@ -240,7 +239,7 @@ void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolum
                     if (*currentVolume < 0)
                         *currentVolume = 0;
                     Mix_VolumeMusic(*currentVolume);
-                    printf("Volume Decreased: %d%%\n", ((*currentVolume) * 100) / MIX_MAX_VOLUME);
+                    printf("Volume Decreased: %d\n", ((*currentVolume) * 100) / MIX_MAX_VOLUME);
                     break;
                 }
                 if (verif_collision_2(e, volpf))
@@ -249,7 +248,7 @@ void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolum
                     if (*currentVolume > MIX_MAX_VOLUME)
                         *currentVolume = MIX_MAX_VOLUME;
                     Mix_VolumeMusic(*currentVolume);
-                    printf("Volume Increased: %d%%\n", ((*currentVolume) * 100) / MIX_MAX_VOLUME);
+                    printf("Volume Increased: %d\n", ((*currentVolume) * 100) / MIX_MAX_VOLUME);
                     break;
                 }
 
@@ -270,15 +269,16 @@ void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolum
                     {
                         SDL_FreeSurface(background.image);
                         background.image = IMG_Load("../assets/backgrounds/bgf.png");
+                        SDL_FreeSurface(window);
                         SDL_WM_ToggleFullScreen(window);
                     }
                 }
                 if (verif_collision_2(e, btn1f))
                 {
                     fullscreen = 0;
+                    SDL_FreeSurface(window);
                     window = SDL_SetVideoMode(1920, 1080, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE);
                     SDL_FreeSurface(background.image);
-
                     background.image = IMG_Load("../assets/backgrounds/bgf.png");
                 }
                 if (verif_collision_2(e, returntxt))
@@ -346,4 +346,5 @@ void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolum
     SDL_FreeSurface(optionsf.image);
     SDL_FreeSurface(returntxtf.image);
     SDL_FreeSurface(logof.image);
+    *initial_menu = 0;
 }

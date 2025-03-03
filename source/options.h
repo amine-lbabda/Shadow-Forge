@@ -17,4 +17,4 @@ typedef struct text
     SDL_Rect rectx;
 } text;
 int verif_collision_2(SDL_Event e, image button);
-void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolume, int *run);
+void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolume, int *run, int *initial_menu);
