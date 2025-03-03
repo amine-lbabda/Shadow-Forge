@@ -162,17 +162,17 @@ void Menu(SDL_Surface *screen)
                 }
                 if (event.key.keysym.sym == SDLK_j && run)
                 {
-                    //
+
                     initialMenu = 1;
                 }
                 if (event.key.keysym.sym == SDLK_o && run)
                 {
-                    //
+
                     initialMenu = 2;
                 }
                 if (event.key.keysym.sym == SDLK_m && run)
                 {
-                    //
+
                     initialMenu = 3;
                 }
             }
@@ -185,21 +185,18 @@ void Menu(SDL_Surface *screen)
                     {
                         buttonMoition(positionPlay, screen, flip);
                         Mix_PlayChannel(-1, son, 0);
-
                         initialMenu = 1;
                     }
                     if (event.button.x >= 80 && event.button.x <= 355 && event.button.y >= 300 && event.button.y <= 355 && run)
                     {
                         buttonMoition(positionScores, screen, flip);
                         Mix_PlayChannel(-1, son, 0);
-
                         initialMenu = 2;
                     }
                     if (event.button.x >= 80 && event.button.x <= 355 && event.button.y >= 380 && event.button.y <= 435 && run)
                     {
                         buttonMoition(positionOptions, screen, flip);
                         Mix_PlayChannel(-1, son, 0);
-
                         initialMenu = 3;
                     }
                     if (event.button.x >= 80 && event.button.x <= 355 && event.button.y >= 460 && event.button.y <= 515 && run)

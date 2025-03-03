@@ -13,7 +13,7 @@ void chargement(SDL_Surface *ecran, int *run, int *initial_menu)
     int quitter = 1;
     int indice = 0;
     init_save(&s);
-    while (quitter && *run)
+    while (quitter && *run && *initial_menu)
     {
         switch (indice)
         {
@@ -42,7 +42,7 @@ void chargement(SDL_Surface *ecran, int *run, int *initial_menu)
                         miseajour(&s);
                         if (s.btn_select == 5)
                         {
-                            Menu(ecran);
+                            *initial_menu = 0;
                         }
                         if (s.btn_select == 1)
                         {
@@ -105,5 +105,5 @@ void chargement(SDL_Surface *ecran, int *run, int *initial_menu)
         SDL_Flip(ecran);
     }
     liberer_save(&s);
-    *initial_menu = 0;
+    // *initial_menu = 0;
 }

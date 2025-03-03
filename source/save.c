@@ -46,7 +46,6 @@ void init_save(save *s)
     s->pos_new.w = s->new[0]->w;
     s->pos_new.h = s->new[0]->h;
 
-
     s->font = TTF_OpenFont("../assets/fonts/aa.TTF", 45);
     if (s->font == NULL)
     {
@@ -233,25 +232,44 @@ void afficher_sous_menu(save s, SDL_Surface *ecran)
 
 void miseajour_sous_menu(save *s)
 {
-    if (collisionsouris(s->pos_load) == 1)
+    static int last_hovered_button = 0;
+    if (collisionsouris(s->pos_yes) == 1)
     {
         s->btn_select = 3;
+        if (last_hovered_button != 3)
+        {
+            Mix_PlayChannel(-1, s->hover_sound, 0);
+            last_hovered_button = 3;
+        }
     }
     else
     {
-        if (collisionsouris(s->pos_new) == 1)
+        if (collisionsouris(s->pos_no) == 1)
         {
+            printf("noooooo ");
             s->btn_select = 4;
+            if (last_hovered_button != 4)
+            {
+                Mix_PlayChannel(-1, s->hover_sound, 0);
+                last_hovered_button = 4;
+            }
         }
         else
         {
             if (collisionsouris(s->pos_retour) == 1)
             {
                 s->btn_select = 5;
-            }
-            else
-            {
-                s->btn_select = 0;
+                if (last_hovered_button != 5)
+                {
+                    Mix_PlayChannel(-1, s->hover_sound, 0);
+                    last_hovered_button = 5;
+                }
+                else
+                {
+                    s->btn_select = 0;
+                    last_hovered_button = 0;
+                }
+                last_hovered_button = 0;
             }
         }
     }
@@ -270,5 +288,4 @@ void liberer_save(save *s)
     TTF_CloseFont(s->font_question);
     Mix_FreeMusic(s->continu);
     Mix_FreeChunk(s->hover_sound);
-    // Mix_CloseAudio();
 }
