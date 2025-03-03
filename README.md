@@ -27,6 +27,6 @@ TODO:
 
 **NOTE** :You can check a branch which will be created later and it will be having a version made by myself but currently we are at SDL 1.2 due to educational stuff 
 
-**NOTE**: You can run our game in windows using WSL (Windows Subsystem for Linux) ! 
+**NOTE**: You can run our game in windows using WSL (Windows Subsystem for Linux) and our game runs smoothely on Ubuntu 18.04 and Ubuntu 20.04 only (Ubuntu 22.04 not tested ans Ubuntu 24.04 doesn't support SDL 1.2,only supports SDL > 2)
 
 
