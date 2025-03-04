@@ -121,16 +121,19 @@ void Menu(SDL_Surface *screen)
                 {
                     buttonMoition(positionPlay, screen, flip);
                     Mix_PlayChannel(-1, son, 0);
+                    initialMenu = 1;
                 }
                 if (event.key.keysym.sym == SDLK_RETURN && (cursPosition == 1 || mouseCurs == 1) && run)
                 {
                     buttonMoition(positionScores, screen, flip);
                     Mix_PlayChannel(-1, son, 0);
+                    initialMenu = 2;
                 }
                 if (event.key.keysym.sym == SDLK_RETURN && (cursPosition == 2 || mouseCurs == 2) && run)
                 {
                     buttonMoition(positionOptions, screen, flip);
                     Mix_PlayChannel(-1, son, 0);
+                    initialMenu = 3;
                 }
                 if (event.key.keysym.sym == SDLK_RETURN && (cursPosition == 3 || mouseCurs == 3) && run)
                 {
