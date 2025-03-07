@@ -14,6 +14,7 @@ void score2(SDL_Surface *ecran, int *run, int *initial_menu)
 	int inside_confirm;
 	int inside_return;
 	Uint8 mouseState;
+	Mix_Music *musique = NULL;
 	SDL_Surface *current_button;
 	SDL_Surface *current_button2;
 	SDL_Surface *image, *button, *buttons, *button2, *buttons2, *re = NULL;
@@ -25,7 +26,6 @@ void score2(SDL_Surface *ecran, int *run, int *initial_menu)
 	SDL_Rect posre, posconf, posscore, posname;
 	SDL_Color Color;
 	SDL_Event event;
-	Mix_Music *musique;
 	Mix_Chunk *tick = NULL;
 	SDL_Surface *button_hover, *button2_hover;
 	SDL_Surface *text_return = NULL;
@@ -106,19 +106,20 @@ void score2(SDL_Surface *ecran, int *run, int *initial_menu)
 
 						SDL_FreeSurface(image);
 						image = affichage("../assets/backgrounds/bgscore.jpg", &posbg);
+						musique = Mix_LoadMUS("../assets/audio/theme.mp3");
+						Mix_PlayMusic(musique, -1);
 						Mix_PlayChannel(-1, tick, 0);
 						show_new_interface = 1;
 					}
-					else if (inside_confirm || show_new_interface == 1)
+					else if (inside_confirm && show_new_interface == 1)
 					{
 						menu_quiz(ecran, run);
 					}
 
-					if (inside_return && (show_new_interface == 0))
+					if (inside_return && (show_new_interface == 1))
 					{
 						SDL_FreeSurface(image);
 						image = affichage("../assets/backgrounds/bgscore.jpg", &posbg);
-						Mix_FreeMusic(musique);
 						show_new_interface = 0;
 					}
 					if (inside_return && (show_new_interface == 0))
@@ -149,5 +150,6 @@ void score2(SDL_Surface *ecran, int *run, int *initial_menu)
 	}
 
 	liberer2(image, font, tick, *run);
+	Mix_FreeMusic(musique);
 	*initial_menu = 0;
 }
