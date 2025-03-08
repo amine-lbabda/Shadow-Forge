@@ -8,7 +8,7 @@ More details will be added and revealed as we step into our project !
 To run it,just head to the sources file and run `make` 
 
 
-# Linux users (ubuntu 18.04 & 20.04 users)
+# Linux users (ubuntu 18.04,20.04 & 22.04 users)
 Before running `make` make sure to install all the recommended libraries and run it using Ubuntu 18.04 or 20.04 (22.04 not tested yet and latest version does not support this old version of SDL !) with the usage of this command:
 
 `sudo apt-get install libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libpulse-dev 
