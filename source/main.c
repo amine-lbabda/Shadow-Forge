@@ -14,16 +14,23 @@ int main(int argc, char *argv[])
         if (screen == NULL)
         {
             printf("Unable to Set video mode :%s \n", SDL_GetError());
+            return 1;
         }
-        if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
+        else
         {
-            printf("Error:%s", Mix_GetError());
-        }
-        if (TTF_Init() < 0)
-        {
-            printf("Error:%s\n", TTF_GetError());
+            if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
+            {
+                printf("Error:%s", Mix_GetError());
+                return 1;
+            }
+            if (TTF_Init() < 0)
+            {
+                printf("Error:%s\n", TTF_GetError());
+                return 1;
+            }
+            Menu(screen);
         }
     }
-    Menu(screen);
+
     return 0;
 }
