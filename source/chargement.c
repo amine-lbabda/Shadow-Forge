@@ -105,5 +105,4 @@ void chargement(SDL_Surface *ecran, int *run, int *initial_menu)
         SDL_Flip(ecran);
     }
     liberer_save(&s);
-    // *initial_menu = 0;
 }

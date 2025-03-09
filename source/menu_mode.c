@@ -15,6 +15,7 @@ void menu_mode(SDL_Surface *ecran, int *run, int *initial_menu)
 	image button_mono;
 	image button_multi;
 	image button_clicked;
+	image button_clicked_mono;
 	image button_clicked_multi;
 	image button_name_1;
 	image button_name_1_clicked;
@@ -79,8 +80,12 @@ void menu_mode(SDL_Surface *ecran, int *run, int *initial_menu)
 			position_image(48, 942, return_image_clicked.image->w, return_image_clicked.image->h, &return_image_clicked.posimage);
 			position_image(1645, 960, confirm_image.image->w, confirm_image.image->h, &confirm_image.posimage);
 			confirm_image_clicked.posimage = confirm_image.posimage;
-			button_name_1.posimage = button_mono.posimage;
-			button_name_1_clicked = button_clicked;
+			// button_name_1.posimage = button_mono.posimage;
+			position_image(248, 599, button_name_1.image->w, button_name_1.image->h, &button_name_1.posimage);
+			button_clicked_mono = button_clicked;
+			position_image(158, 494, button_clicked_mono.image->w, button_clicked_mono.image->h, &button_clicked_mono.posimage);
+
+			// button_name_1_clicked = button_clicked;
 			position_image(248, 793, button_name_2.image->w, button_name_2.image->h, &button_name_2.posimage);
 			position_image(164, 695, button_name_2_clicked.image->w, button_name_2_clicked.image->h, &button_name_2_clicked.posimage);
 			button_mono_text.font = load_font("../assets/fonts/HARRYP.TTF", 60);
@@ -97,10 +102,10 @@ void menu_mode(SDL_Surface *ecran, int *run, int *initial_menu)
 				button_multi_text.text = affichage_text(button_mono_text.font, "MULTIPLAYER", button_multi_text.textcouleur);
 				avatar_1.text = affichage_text(button_mono_text.font, "AVATAR 1", button_mono_text.textcouleur);
 				avatar_2.text = affichage_text(button_mono_text.font, "AVATAR 2", button_multi_text.textcouleur);
-				position_image(360, 434, 0, 0, &avatar_1.postext);
+				position_image(360, 480, 0, 0, &avatar_1.postext);
 				position_image(360, 710, 0, 0, &avatar_2.postext);
 				position_image(300, 361, 1014, 161, &Text.postext);
-				position_image(320, 540, 69, 379, &button_mono_text.postext);
+				position_image(320, 545, 69, 379, &button_mono_text.postext);
 				position_image(320, 710, 434, 77, &button_multi_text.postext);
 				Mix_PlayMusic(music_theme, -1);
 				while (quitter == 0 && *run)
@@ -121,7 +126,7 @@ void menu_mode(SDL_Surface *ecran, int *run, int *initial_menu)
 						if (affiche_multi == 0)
 						{
 							button_name_1_text.text = affichage_text(button_mono_text.font, "NAME 1", button_mono_text.textcouleur);
-							position_image(400, 535, 578, 126, &button_name_1_text.postext);
+							position_image(385, 615, 578, 126, &button_name_1_text.postext);
 							afficher(avatar_1.text, NULL, ecran, &avatar_1.postext);
 							afficher(button_name_1.image, NULL, ecran, &button_name_1.posimage);
 							aficher_text(button_name_1_text.text, &button_name_1_text.postext, ecran);
@@ -129,7 +134,7 @@ void menu_mode(SDL_Surface *ecran, int *run, int *initial_menu)
 						if (affiche_multi == 1 && *run)
 						{
 							button_name_1_text.text = affichage_text(button_mono_text.font, "NAME 1", button_mono_text.textcouleur);
-							position_image(400, 535, 578, 126, &button_name_1_text.postext);
+							position_image(400, 615, 578, 126, &button_name_1_text.postext);
 							position_image(400, 810, 1051, 81, &button_name_2_text.postext);
 							button_name_2_text.text = affichage_text(button_mono_text.font, "NAME 2", button_multi_text.textcouleur);
 							afficher(avatar_1.text, NULL, ecran, &avatar_1.postext);
@@ -183,7 +188,7 @@ void menu_mode(SDL_Surface *ecran, int *run, int *initial_menu)
 								}
 								else if (verif_collision(e, button_name_1))
 								{
-									afficher(button_name_1_clicked.image, NULL, ecran, &button_name_1_clicked.posimage);
+									afficher(button_clicked_mono.image, NULL, ecran, &button_clicked_mono.posimage);
 								}
 							}
 							if (verif_collision(e, return_image))
@@ -260,4 +265,5 @@ void menu_mode(SDL_Surface *ecran, int *run, int *initial_menu)
 	Mix_FreeMusic(music_theme);
 	Mix_FreeChunk(music_click);
 	SDL_FreeSurface(background_secondaire.image);
+	SDL_FreeSurface(button_clicked_mono.image);
 }
