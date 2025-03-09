@@ -96,9 +96,6 @@ void Menu(SDL_Surface *screen)
         else
         {
             menu_options(screen, music, &initalVolume, &run, &initialMenu);
-            Mix_FreeMusic(music);
-            music = Mix_LoadMUS("../assets/audio/river.mp3");
-            Mix_PlayMusic(music, -1);
         }
         hover = 0;
 
