@@ -288,4 +288,15 @@ void liberer_save(save *s)
     TTF_CloseFont(s->font_question);
     Mix_FreeMusic(s->continu);
     Mix_FreeChunk(s->hover_sound);
+    s->bg = NULL;
+    s->logo = NULL;
+    s->retour_blanc = NULL;
+    s->retour_rouge = NULL;
+    s->retour_rouge = NULL;
+    s->text = NULL;
+    s->question = NULL;
+    s->font = NULL;
+    s->font_question = NULL;
+    s->continu = NULL;
+    s->hover_sound = NULL;
 }

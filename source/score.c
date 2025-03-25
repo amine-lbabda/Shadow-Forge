@@ -150,6 +150,10 @@ void score2(SDL_Surface *ecran, int *run, int *initial_menu)
 	}
 
 	liberer2(image, font, tick, *run);
+	image = NULL;
+	font = NULL;
+	tick = NULL;
 	Mix_FreeMusic(musique);
+	musique = NULL;
 	*initial_menu = 0;
 }

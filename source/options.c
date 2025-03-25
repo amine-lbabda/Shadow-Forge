@@ -323,28 +323,50 @@ void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolum
     }
 
     SDL_FreeSurface(background.image);
+    background.image = NULL;
     SDL_FreeSurface(btn1.image);
+    btn1.image = NULL;
     SDL_FreeSurface(btn2.image);
+    btn2.image = NULL;
     SDL_FreeSurface(volp.image);
+    volp.image = NULL;
     SDL_FreeSurface(fs.image);
+    fs.image = NULL;
     SDL_FreeSurface(win.image);
+    win.image = NULL;
     SDL_FreeSurface(volcon.image);
+    volcon.image = NULL;
     SDL_FreeSurface(wincon.image);
+    wincon.image = NULL;
     SDL_FreeSurface(music.image);
+    music.image = NULL;
     SDL_FreeSurface(options.image);
+    options.image = NULL;
     SDL_FreeSurface(returntxt.image);
+    returntxt.image = NULL;
     SDL_FreeSurface(logo.image);
-
+    logo.image = NULL;
     SDL_FreeSurface(btn1f.image);
+    btn1f.image = NULL;
     SDL_FreeSurface(btn2f.image);
+    btn2f.image = NULL;
     SDL_FreeSurface(volpf.image);
+    volpf.image = NULL;
     SDL_FreeSurface(fsf.image);
+    fsf.image = NULL;
     SDL_FreeSurface(winf.image);
+    winf.image = NULL;
     SDL_FreeSurface(volconf.image);
+    volconf.image = NULL;
     SDL_FreeSurface(winconf.image);
+    winconf.image = NULL;
     SDL_FreeSurface(musicf.image);
+    musicf.image = NULL;
     SDL_FreeSurface(optionsf.image);
+    optionsf.image = NULL;
     SDL_FreeSurface(returntxtf.image);
+    returntxtf.image = NULL;
     SDL_FreeSurface(logof.image);
+    logof.image = NULL;
     *initial_menu = 0;
 }

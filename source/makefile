@@ -1,5 +1,5 @@
 mymenu: main.o menu.o chargement.o save.o menu_mode.o source_menu.o source_score.o score.o options.o source_options.o quiz.o source_quiz.o source_menu_principale.o
-	gcc $^ -o mymenu -lSDL -lSDL_image -lSDL_mixer -lSDL_ttf  -g
+	gcc $^ -o ./mymenu -lSDL -lSDL_image -lSDL_mixer -lSDL_ttf  -g
 
 main.o: main.c
 	gcc -c main.c -g

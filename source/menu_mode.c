@@ -262,8 +262,20 @@ void menu_mode(SDL_Surface *ecran, int *run, int *initial_menu)
 		}
 	}
 	liberer(background.image, button_mono.image, button_multi.image, button_name_1.image, button_name_2.image, button_mono_text.font);
+
+	background.image = NULL;
+	button_mono.image = NULL;
+	button_multi.image = NULL;
+	button_name_1.image = NULL;
+	button_name_2.image = NULL;
+	button_mono_text.font = NULL;
+
 	Mix_FreeMusic(music_theme);
+	music_theme = NULL;
 	Mix_FreeChunk(music_click);
+	music_click = NULL;
 	SDL_FreeSurface(background_secondaire.image);
+	background_secondaire.image = NULL;
 	SDL_FreeSurface(button_clicked_mono.image);
+	button_clicked_mono.image = NULL;
 }
