@@ -285,18 +285,31 @@ void Menu(SDL_Surface *screen)
     }
 
     Mix_FreeChunk(son);
+    son = NULL;
     Mix_FreeMusic(music);
+    music = NULL;
     SDL_FreeSurface(screen);
+    screen = NULL;
     SDL_FreeSurface(background);
+    background = NULL;
     SDL_FreeSurface(play);
+    play = NULL;
     SDL_FreeSurface(options);
+    options = NULL;
     SDL_FreeSurface(scores);
+    scores = NULL;
     SDL_FreeSurface(quit);
+    quit = NULL;
     SDL_FreeSurface(flip);
+    flip = NULL;
     SDL_FreeSurface(logo);
+    logo = NULL;
     SDL_FreeSurface(text_group);
+    text_group = NULL;
     SDL_FreeSurface(menu_text);
+    menu_text = NULL;
     TTF_CloseFont(font);
+    font = NULL;
     TTF_Quit();
     Mix_CloseAudio();
     SDL_Quit();

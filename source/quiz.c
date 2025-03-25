@@ -154,15 +154,25 @@ void afficher_quiz(quiz q, SDL_Surface *ecran)
 void cleanup(menu *m, quiz *q)
 {
    SDL_FreeSurface(m->bg_principale);
+   m->bg_principale = NULL;
    SDL_FreeSurface(m->logo);
+   m->logo = NULL;
    SDL_FreeSurface(m->bquiz[0]);
+   m->bquiz[0] = NULL;
    SDL_FreeSurface(m->bquiz[1]);
+   m->bquiz[1] = NULL;
    SDL_FreeSurface(m->bpuzzle[0]);
+   m->bpuzzle[0] = NULL;
    SDL_FreeSurface(m->bpuzzle[1]);
+   m->bpuzzle[1] = NULL;
    SDL_FreeSurface(m->Return[0]);
+   m->Return[0] = NULL;
    SDL_FreeSurface(m->Return[1]);
-
+   m->Return[1] = NULL;
    SDL_FreeSurface(q->bg_principale);
+   q->bg_principale = NULL;
    SDL_FreeSurface(q->Return[0]);
+   q->Return[0] = NULL;
    SDL_FreeSurface(q->Return[1]);
+   q->Return[1] = NULL;
 }
