@@ -101,7 +101,7 @@ void Menu(SDL_Surface *screen)
         }
         else if (initialMenu == 4)
         {
-            history_menu(screen, &run, font, coleur_text);
+            history_menu(screen, &run, font, coleur_text, &initialMenu);
         }
         hover = 0;
 
