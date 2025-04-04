@@ -5,7 +5,7 @@ This video game is built to showcase our skills in making games from scratch usi
 
 More details will be added and revealed as we step into our project !
 
-To run it,just head to the sources file and run `make` 
+To run it,just run `make` 
 
 
 # Linux users (ubuntu 18.04,20.04 & 22.04 users)
