@@ -2,10 +2,13 @@
 #include "save.h"
 #include "score.h"
 #include "options.h"
+#include "history.h"
 void Menu(SDL_Surface *screen)
 {
     int initialMenu = 0;
     int initalVolume = MIX_MAX_VOLUME;
+    SDL_Surface *hist = NULL;
+    SDL_Rect positionhist, positionreturn;
     SDL_Surface *background = NULL, *logo = NULL, *play = NULL, *options = NULL, *scores = NULL, *quit = NULL, *flip = NULL, *text_group = NULL, *menu_text = NULL;
     SDL_Event event;
     Mix_Chunk *son;
@@ -28,6 +31,7 @@ void Menu(SDL_Surface *screen)
     flip = IMG_Load("./assets/buttons/flip.png");
     font = TTF_OpenFont("./assets/fonts/HARRYP.TTF", 40);
     font_menu = TTF_OpenFont("./assets/fonts/HARRYP.TTF", 60);
+    hist = IMG_Load("./assets/buttons/hist.png");
     if ((font == NULL) || (font_menu == NULL))
     {
         fprintf(stderr, "Failed to load font: %s\n", TTF_GetError());
@@ -37,7 +41,7 @@ void Menu(SDL_Surface *screen)
     coleur_text.b = 255;
     text_group = TTF_RenderText_Blended(font, "MADE BY:DIVINE VENDETTA", coleur_text);
     menu_text = TTF_RenderText_Blended(font_menu, "MENU", coleur_text);
-
+    SDL_Surface *menu_hist = TTF_RenderText_Blended(font, "RETURN", coleur_text);
     positionGroupText.x = 1400;
     positionGroupText.y = 1020;
     positionGroupText.w = text_group->w;
@@ -64,6 +68,10 @@ void Menu(SDL_Surface *screen)
 
     positionQuit.x = 583;
     positionQuit.y = 730;
+    positionhist.x = 0;
+    positionhist.y = 0;
+    positionreturn.x = 0;
+    positionreturn.y = 0;
     Mix_PlayMusic(music, -1);
     SDL_WM_SetCaption("Menu", NULL);
     while (run)
@@ -97,6 +105,10 @@ void Menu(SDL_Surface *screen)
             Mix_FreeMusic(music);
             music = Mix_LoadMUS("./assets/audio/river.mp3");
             Mix_PlayMusic(music, -1);
+        }
+        else if (initialMenu == 4)
+        {
+            history_menu(screen, &run, font, coleur_text);
         }
         hover = 0;
 
@@ -133,7 +145,7 @@ void Menu(SDL_Surface *screen)
                 if (event.key.keysym.sym == SDLK_RETURN && (cursPosition == 3 || mouseCurs == 3) && run)
                 {
                     Mix_PlayChannel(-1, son, 0);
-                    run = 0;
+                    initialMenu = 4;
                 }
                 if ((event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) && !hover && run)
                 {
@@ -196,7 +208,7 @@ void Menu(SDL_Surface *screen)
                     if (event.button.x >= positionQuit.x && event.button.x <= positionQuit.x + quit->w && event.button.y >= positionQuit.y && event.button.y <= positionQuit.y + quit->h && run)
                     {
                         Mix_PlayChannel(-1, son, 0);
-                        run = 0;
+                        initialMenu = 4;
                     }
                 }
                 break;
