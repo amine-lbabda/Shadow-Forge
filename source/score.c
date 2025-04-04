@@ -45,24 +45,24 @@ void score2(SDL_Surface *ecran, int *run, int *initial_menu)
 	posscore.x = 800;
 	posscore.y = 330;
 
-	image = affichage("../assets/backgrounds/bgscore.jpg", &posbg);
-	button = affichageb("../assets/buttons/button.png", &posb);
-	button2 = affichageb2("../assets/buttons/button2.png", &posb2);
+	image = affichage("./assets/backgrounds/bgscore.jpg", &posbg);
+	button = affichageb("./assets/buttons/button.png", &posb);
+	button2 = affichageb2("./assets/buttons/button2.png", &posb2);
 
-	button_hover = affichageb("../assets/buttons/buttons.png", &posb);
-	button2_hover = affichageb2("../assets/buttons/buttons2.png", &posb2);
+	button_hover = affichageb("./assets/buttons/buttons.png", &posb);
+	button2_hover = affichageb2("./assets/buttons/buttons2.png", &posb2);
 
-	font = affichage_text2("../assets/fonts/HARRYP.TTF");
+	font = affichage_text2("./assets/fonts/HARRYP.TTF");
 
 	text_return = TTF_RenderText_Solid(font, "RETURN", white);
 	text_return_hover = TTF_RenderText_Solid(font, "RETURN", red);
 	text_confirm = TTF_RenderText_Solid(font, "CONFIRM", white);
 	text_confirm_hover = TTF_RenderText_Solid(font, "CONFIRM", red);
-	font = affichage_score("../assets/fonts/HARRYP.TTF");
+	font = affichage_score("./assets/fonts/HARRYP.TTF");
 	text_score = TTF_RenderText_Solid(font, "SCORE", white);
-	font = affichage_name("../assets/fonts/HARRYP.TTF");
+	font = affichage_name("./assets/fonts/HARRYP.TTF");
 	text_name = TTF_RenderText_Solid(font, "NICKNAME", white);
-	tick = Mix_LoadWAV("../assets/audio/tick.wav");
+	tick = Mix_LoadWAV("./assets/audio/tick.wav");
 	if (!text_return || !text_confirm || !text_score)
 	{
 		printf("Error rendering text: %s\n", TTF_GetError());
@@ -105,8 +105,8 @@ void score2(SDL_Surface *ecran, int *run, int *initial_menu)
 					{
 
 						SDL_FreeSurface(image);
-						image = affichage("../assets/backgrounds/bgscore.jpg", &posbg);
-						musique = Mix_LoadMUS("../assets/audio/theme.mp3");
+						image = affichage("./assets/backgrounds/bgscore.jpg", &posbg);
+						musique = Mix_LoadMUS("./assets/audio/theme.mp3");
 						Mix_PlayMusic(musique, -1);
 						Mix_PlayChannel(-1, tick, 0);
 						show_new_interface = 1;
@@ -119,7 +119,7 @@ void score2(SDL_Surface *ecran, int *run, int *initial_menu)
 					if (inside_return && (show_new_interface == 1))
 					{
 						SDL_FreeSurface(image);
-						image = affichage("../assets/backgrounds/bgscore.jpg", &posbg);
+						image = affichage("./assets/backgrounds/bgscore.jpg", &posbg);
 						show_new_interface = 0;
 					}
 					if (inside_return && (show_new_interface == 0))

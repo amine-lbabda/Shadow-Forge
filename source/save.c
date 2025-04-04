@@ -7,24 +7,24 @@
 #include "save.h"
 void init_save(save *s)
 {
-    s->bg = IMG_Load("../assets/backgrounds/bgf.png");
+    s->bg = IMG_Load("./assets/backgrounds/bgf.png");
     if (s->bg == NULL)
     {
         printf("erreur %s\n", IMG_GetError());
         SDL_Quit();
     }
 
-    s->yes[0] = IMG_Load("../assets/buttons/yes0.png");
-    s->yes[1] = IMG_Load("../assets/buttons/yes1.png");
+    s->yes[0] = IMG_Load("./assets/buttons/yes0.png");
+    s->yes[1] = IMG_Load("./assets/buttons/yes1.png");
 
-    s->no[0] = IMG_Load("../assets/buttons/no0.png");
-    s->no[1] = IMG_Load("../assets/buttons/no1.png");
+    s->no[0] = IMG_Load("./assets/buttons/no0.png");
+    s->no[1] = IMG_Load("./assets/buttons/no1.png");
 
-    s->load[0] = IMG_Load("../assets/buttons/load0.png");
-    s->load[1] = IMG_Load("../assets/buttons/load1.png");
+    s->load[0] = IMG_Load("./assets/buttons/load0.png");
+    s->load[1] = IMG_Load("./assets/buttons/load1.png");
 
-    s->new[0] = IMG_Load("../assets/buttons/new0.png");
-    s->new[1] = IMG_Load("../assets/buttons/new1.png");
+    s->new[0] = IMG_Load("./assets/buttons/new0.png");
+    s->new[1] = IMG_Load("./assets/buttons/new1.png");
 
     s->pos_yes.x = 300;
     s->pos_yes.y = 650;
@@ -46,7 +46,7 @@ void init_save(save *s)
     s->pos_new.w = s->new[0]->w;
     s->pos_new.h = s->new[0]->h;
 
-    s->font = TTF_OpenFont("../assets/fonts/aa.TTF", 45);
+    s->font = TTF_OpenFont("./assets/fonts/aa.TTF", 45);
     if (s->font == NULL)
     {
         printf("Erreur chargement police : %s\n", TTF_GetError());
@@ -66,7 +66,7 @@ void init_save(save *s)
     s->pos_retour.w = s->retour_blanc->w;
     s->pos_retour.h = s->retour_blanc->h;
 
-    s->font_text = TTF_OpenFont("../assets/fonts/aa.TTF", 150);
+    s->font_text = TTF_OpenFont("./assets/fonts/aa.TTF", 150);
     if (s->font_text == NULL)
     {
         printf("Erreur chargement police : %s\n", TTF_GetError());
@@ -75,7 +75,7 @@ void init_save(save *s)
     s->pos_text.x = 450;
     s->pos_text.y = 450;
 
-    s->font_question = TTF_OpenFont("../assets/fonts/aa.TTF", 60);
+    s->font_question = TTF_OpenFont("./assets/fonts/aa.TTF", 60);
     if (s->font_question == NULL)
     {
         printf("Erreur chargement police : %s\n", TTF_GetError());
@@ -84,7 +84,7 @@ void init_save(save *s)
     s->pos_question.x = 250;
     s->pos_question.y = 586;
 
-    s->logo = IMG_Load("../assets/buttons/logos.png");
+    s->logo = IMG_Load("./assets/buttons/logos.png");
     if (s->logo == NULL)
     {
         printf("erreur %s\n", IMG_GetError());
@@ -94,7 +94,7 @@ void init_save(save *s)
     s->pos_logo.y = 150;
     s->pos_logo.w = s->logo->w;
     s->pos_logo.h = s->logo->h;
-    s->continu = Mix_LoadMUS("../assets/audio/theme2.mp3");
+    s->continu = Mix_LoadMUS("./assets/audio/theme2.mp3");
     if (s->continu == NULL)
     {
         printf("Erreur Mix_LoadMUS : %s\n", Mix_GetError());
@@ -103,7 +103,7 @@ void init_save(save *s)
     {
         Mix_PlayMusic(s->continu, -1);
     }
-    s->hover_sound = Mix_LoadWAV("../assets/audio/tick.wav");
+    s->hover_sound = Mix_LoadWAV("./assets/audio/tick.wav");
     if (s->hover_sound == NULL)
     {
         printf("Erreur Mix_LoadWAV : %s\n", Mix_GetError());

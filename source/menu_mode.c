@@ -45,21 +45,21 @@ void menu_mode(SDL_Surface *ecran, int *run, int *initial_menu)
 	}
 	else
 	{
-		music_theme = Mix_LoadMUS("../assets/audio/theme_menu.mp3");
-		music_click = Mix_LoadWAV("../assets/audio/click_menu.wav");
-		background.image = load_image("../assets/backgrounds/bg_secondaire.png");
-		background_secondaire.image = load_image("../assets/backgrounds/bg_secondaire.png");
-		button_mono.image = load_image("../assets/buttons/button_1.png");
-		button_multi.image = load_image("../assets/buttons/button_1.png");
-		button_clicked.image = load_image("../assets/buttons/button_clicked.png");
-		button_clicked_multi.image = load_image("../assets/buttons/button_clicked.png");
-		button_name_1.image = load_image("../assets/buttons/button_1.png");
-		button_name_2.image = load_image("../assets/buttons/button_1.png");
-		button_name_2_clicked.image = load_image("../assets/buttons/button_clicked.png");
-		return_image.image = load_image("../assets/buttons/RETURN.png");
-		return_image_clicked.image = load_image("../assets/buttons/RETURN_clicked.png");
-		confirm_image.image = load_image("../assets/buttons/CONFIRM.png");
-		confirm_image_clicked.image = load_image("../assets/buttons/CONFIRM_clicked.png");
+		music_theme = Mix_LoadMUS("./assets/audio/theme_menu.mp3");
+		music_click = Mix_LoadWAV("./assets/audio/click_menu.wav");
+		background.image = load_image("./assets/backgrounds/bg_secondaire.png");
+		background_secondaire.image = load_image("./assets/backgrounds/bg_secondaire.png");
+		button_mono.image = load_image("./assets/buttons/button_1.png");
+		button_multi.image = load_image("./assets/buttons/button_1.png");
+		button_clicked.image = load_image("./assets/buttons/button_clicked.png");
+		button_clicked_multi.image = load_image("./assets/buttons/button_clicked.png");
+		button_name_1.image = load_image("./assets/buttons/button_1.png");
+		button_name_2.image = load_image("./assets/buttons/button_1.png");
+		button_name_2_clicked.image = load_image("./assets/buttons/button_clicked.png");
+		return_image.image = load_image("./assets/buttons/RETURN.png");
+		return_image_clicked.image = load_image("./assets/buttons/RETURN_clicked.png");
+		confirm_image.image = load_image("./assets/buttons/CONFIRM.png");
+		confirm_image_clicked.image = load_image("./assets/buttons/CONFIRM_clicked.png");
 		if ((background.image == NULL) || (button_mono.image == NULL) || (button_multi.image == NULL) || (button_clicked.image == NULL) || (button_clicked_multi.image == NULL) || (return_image.image == NULL) || (return_image_clicked.image == NULL) || (confirm_image.image == NULL) || (confirm_image_clicked.image == NULL) || (background_secondaire.image == NULL) || (button_name_1.image == NULL) || (button_name_2.image == NULL) || (button_name_2_clicked.image == NULL))
 		{
 			printf("Erreur:%s\n", SDL_GetError());
@@ -88,7 +88,7 @@ void menu_mode(SDL_Surface *ecran, int *run, int *initial_menu)
 			// button_name_1_clicked = button_clicked;
 			position_image(248, 793, button_name_2.image->w, button_name_2.image->h, &button_name_2.posimage);
 			position_image(164, 695, button_name_2_clicked.image->w, button_name_2_clicked.image->h, &button_name_2_clicked.posimage);
-			button_mono_text.font = load_font("../assets/fonts/HARRYP.TTF", 60);
+			button_mono_text.font = load_font("./assets/fonts/HARRYP.TTF", 60);
 			if (button_mono_text.font == NULL)
 			{
 				printf("Erreur%s\n", SDL_GetError());
@@ -154,7 +154,7 @@ void menu_mode(SDL_Surface *ecran, int *run, int *initial_menu)
 						switch (e.type)
 						{
 						case SDL_QUIT:
-							quitter = 0;
+							quitter = 1;
 							*run = 0;
 							break;
 

@@ -12,21 +12,22 @@ void Menu(SDL_Surface *screen)
     Mix_Music *music;
     SDL_Rect positionBackground, positionLogo, positionPlay, positionOptions, positionScores, positionQuit, positionGroupText, positionTeamText;
     SDL_Color coleur_text;
+    SDL_Rect positionFlip;
     TTF_Font *font = NULL, *font_menu = NULL;
     int run = 1;
     int hover = 0;
     int cursPosition = -1, mouseCurs = -1;
-    music = Mix_LoadMUS("../assets/audio/river.mp3");
-    son = Mix_LoadWAV("../assets/audio/click.wav");
-    background = IMG_Load("../assets/backgrounds/background_f.png");
-    logo = IMG_Load("../assets/buttons/logo.png");
-    play = IMG_Load("../assets/buttons/play.png");
-    options = IMG_Load("../assets/buttons/options.png");
-    scores = IMG_Load("../assets/buttons/scores.png");
-    quit = IMG_Load("../assets/buttons/exit.png");
-    flip = IMG_Load("../assets/buttons/flip.png");
-    font = TTF_OpenFont("../assets/fonts/HARRYP.TTF", 40);
-    font_menu = TTF_OpenFont("../assets/fonts/HARRYP.TTF", 60);
+    music = Mix_LoadMUS("./assets/audio/river.mp3");
+    son = Mix_LoadWAV("./assets/audio/click.wav");
+    background = IMG_Load("./assets/backgrounds/background_f.png");
+    logo = IMG_Load("./assets/buttons/logo.png");
+    play = IMG_Load("./assets/buttons/PLAYN.png");
+    options = IMG_Load("./assets/buttons/OPTIONSN.png");
+    scores = IMG_Load("./assets/buttons/SCORESN.png");
+    quit = IMG_Load("./assets/buttons/HISTOIRE.png");
+    flip = IMG_Load("./assets/buttons/flip.png");
+    font = TTF_OpenFont("./assets/fonts/HARRYP.TTF", 40);
+    font_menu = TTF_OpenFont("./assets/fonts/HARRYP.TTF", 60);
     if ((font == NULL) || (font_menu == NULL))
     {
         fprintf(stderr, "Failed to load font: %s\n", TTF_GetError());
@@ -49,20 +50,20 @@ void Menu(SDL_Surface *screen)
     positionBackground.x = 0;
     positionBackground.y = 0;
 
-    positionLogo.x = 1100;
-    positionLogo.y = 40;
+    positionLogo.x = 580;
+    positionLogo.y = 100;
     positionTeamText.x = 120;
     positionTeamText.y = 100;
-    positionPlay.x = 80;
-    positionPlay.y = 220;
+    positionPlay.x = 583;
+    positionPlay.y = 250;
 
-    positionScores.x = 80;
-    positionScores.y = 300;
-    positionOptions.x = 80;
-    positionOptions.y = 380;
+    positionScores.x = 583;
+    positionScores.y = 570;
+    positionOptions.x = 583;
+    positionOptions.y = 410;
 
-    positionQuit.x = 80;
-    positionQuit.y = 460;
+    positionQuit.x = 583;
+    positionQuit.y = 730;
     Mix_PlayMusic(music, -1);
     SDL_WM_SetCaption("Menu", NULL);
     while (run)
@@ -82,20 +83,20 @@ void Menu(SDL_Surface *screen)
         {
             chargement(screen, &run, &initialMenu);
             Mix_FreeMusic(music);
-            music = Mix_LoadMUS("../assets/audio/river.mp3");
+            music = Mix_LoadMUS("./assets/audio/river.mp3");
             Mix_PlayMusic(music, -1);
         }
         else if (initialMenu == 2)
         {
+            menu_options(screen, music, &initalVolume, &run, &initialMenu);
+        }
+        else if (initialMenu == 3)
+        {
 
             score2(screen, &run, &initialMenu);
             Mix_FreeMusic(music);
-            music = Mix_LoadMUS("../assets/audio/river.mp3");
+            music = Mix_LoadMUS("./assets/audio/river.mp3");
             Mix_PlayMusic(music, -1);
-        }
-        else
-        {
-            menu_options(screen, music, &initalVolume, &run, &initialMenu);
         }
         hover = 0;
 
@@ -116,25 +117,21 @@ void Menu(SDL_Surface *screen)
                 }
                 if (event.key.keysym.sym == SDLK_RETURN && (cursPosition == 0 || mouseCurs == 0) && run)
                 {
-                    buttonMoition(positionPlay, screen, flip);
                     Mix_PlayChannel(-1, son, 0);
                     initialMenu = 1;
                 }
                 if (event.key.keysym.sym == SDLK_RETURN && (cursPosition == 1 || mouseCurs == 1) && run)
                 {
-                    buttonMoition(positionScores, screen, flip);
                     Mix_PlayChannel(-1, son, 0);
                     initialMenu = 2;
                 }
                 if (event.key.keysym.sym == SDLK_RETURN && (cursPosition == 2 || mouseCurs == 2) && run)
                 {
-                    buttonMoition(positionOptions, screen, flip);
                     Mix_PlayChannel(-1, son, 0);
                     initialMenu = 3;
                 }
                 if (event.key.keysym.sym == SDLK_RETURN && (cursPosition == 3 || mouseCurs == 3) && run)
                 {
-                    buttonMoition(positionQuit, screen, flip);
                     Mix_PlayChannel(-1, son, 0);
                     run = 0;
                 }
@@ -181,56 +178,48 @@ void Menu(SDL_Surface *screen)
             case SDL_MOUSEBUTTONDOWN:
                 if (event.button.button == SDL_BUTTON_LEFT)
                 {
-                    if (event.button.x >= 80 && event.button.x <= 355 && event.button.y >= 220 && event.button.y <= 275 && run)
+                    if (event.button.x >= positionPlay.x && event.button.x <= positionPlay.x + play->w && event.button.y >= positionPlay.y && event.button.y <= positionPlay.y + play->h && run)
                     {
-                        buttonMoition(positionPlay, screen, flip);
                         Mix_PlayChannel(-1, son, 0);
                         initialMenu = 1;
                     }
-                    if (event.button.x >= 80 && event.button.x <= 355 && event.button.y >= 300 && event.button.y <= 355 && run)
+                    if (event.button.x >= positionScores.x && event.button.x <= positionScores.x + scores->w && event.button.y >= positionScores.y && event.button.y <= positionScores.y + scores->h && run)
                     {
-                        buttonMoition(positionScores, screen, flip);
                         Mix_PlayChannel(-1, son, 0);
                         initialMenu = 2;
                     }
-                    if (event.button.x >= 80 && event.button.x <= 355 && event.button.y >= 380 && event.button.y <= 435 && run)
+                    if (event.button.x >= positionOptions.x && event.button.x <= positionOptions.x + options->w && event.button.y >= positionOptions.y && event.button.y <= positionOptions.y + options->h && run)
                     {
-                        buttonMoition(positionOptions, screen, flip);
                         Mix_PlayChannel(-1, son, 0);
                         initialMenu = 3;
                     }
-                    if (event.button.x >= 80 && event.button.x <= 355 && event.button.y >= 460 && event.button.y <= 515 && run)
+                    if (event.button.x >= positionQuit.x && event.button.x <= positionQuit.x + quit->w && event.button.y >= positionQuit.y && event.button.y <= positionQuit.y + quit->h && run)
                     {
-                        buttonMoition(positionQuit, screen, flip);
                         Mix_PlayChannel(-1, son, 0);
                         run = 0;
                     }
                 }
                 break;
             case SDL_MOUSEMOTION:
-                if (event.motion.x >= 80 && event.motion.x <= 355 && event.motion.y >= 220 && event.motion.y <= 275 && run)
+                if (event.motion.x >= positionPlay.x && event.motion.x <= positionPlay.x + play->w && event.motion.y >= positionPlay.y && event.motion.y <= positionPlay.y + play->h && run)
                 {
                     hover = 1;
                     mouseCurs = 0;
-                    buttonMoition(positionPlay, screen, flip);
                 }
-                else if (event.motion.x >= 80 && event.motion.x <= 355 && event.motion.y >= 300 && event.motion.y <= 355 && run)
+                else if (event.motion.x >= positionScores.x && event.motion.x <= positionScores.x + scores->w && event.motion.y >= positionScores.y && event.motion.y <= positionScores.y + scores->h && run)
                 {
                     hover = 1;
                     mouseCurs = 1;
-                    buttonMoition(positionScores, screen, flip);
                 }
-                else if (event.motion.x >= 80 && event.motion.x <= 355 && event.motion.y >= 380 && event.motion.y <= 435 && run)
+                else if (event.motion.x >= positionOptions.x && event.motion.x <= positionOptions.x + options->w && event.motion.y >= positionOptions.y && event.motion.y <= positionOptions.y + options->h && run)
                 {
                     hover = 1;
                     mouseCurs = 2;
-                    buttonMoition(positionOptions, screen, flip);
                 }
-                else if (event.motion.x >= 80 && event.motion.x <= 355 && event.motion.y >= 460 && event.motion.y <= 515 && run)
+                else if (event.motion.x >= positionQuit.x && event.motion.x <= positionQuit.x + quit->w && event.motion.y >= positionQuit.y && event.motion.y <= positionQuit.y + quit->h && run)
                 {
                     hover = 1;
                     mouseCurs = 3;
-                    buttonMoition(positionQuit, screen, flip);
                 }
                 else
                 {
@@ -244,16 +233,24 @@ void Menu(SDL_Surface *screen)
             switch (mouseCurs)
             {
             case 0:
-                buttonMoition(positionPlay, screen, flip);
+                positionFlip.x = positionPlay.x + 100;
+                positionFlip.y = positionPlay.y + 95;
+                buttonMoition(positionFlip, screen, flip);
                 break;
             case 1:
-                buttonMoition(positionScores, screen, flip);
+                positionFlip.x = positionPlay.x + 100;
+                positionFlip.y = positionOptions.y + 95;
+                buttonMoition(positionFlip, screen, flip);
                 break;
             case 2:
-                buttonMoition(positionOptions, screen, flip);
+                positionFlip.x = positionPlay.x + 100;
+                positionFlip.y = positionScores.y + 95;
+                buttonMoition(positionFlip, screen, flip);
                 break;
             case 3:
-                buttonMoition(positionQuit, screen, flip);
+                positionFlip.x = positionPlay.x + 100;
+                positionFlip.y = positionQuit.y + 95;
+                buttonMoition(positionFlip, screen, flip);
                 break;
             }
             if (hover)
@@ -265,16 +262,24 @@ void Menu(SDL_Surface *screen)
                 switch (cursPosition)
                 {
                 case 0:
-                    buttonMoition(positionPlay, screen, flip);
+                    positionFlip.x = positionPlay.x + 100;
+                    positionFlip.y = positionPlay.y + 95;
+                    buttonMoition(positionFlip, screen, flip);
                     break;
                 case 1:
-                    buttonMoition(positionScores, screen, flip);
+                    positionFlip.x = positionPlay.x + 100;
+                    positionFlip.y = positionOptions.y + 95;
+                    buttonMoition(positionFlip, screen, flip);
                     break;
                 case 2:
-                    buttonMoition(positionOptions, screen, flip);
+                    positionFlip.x = positionPlay.x + 100;
+                    positionFlip.y = positionScores.y + 95;
+                    buttonMoition(positionFlip, screen, flip);
                     break;
                 case 3:
-                    buttonMoition(positionQuit, screen, flip);
+                    positionFlip.x = positionPlay.x + 100;
+                    positionFlip.y = positionQuit.y + 95;
+                    buttonMoition(positionFlip, screen, flip);
                     break;
                 }
             }

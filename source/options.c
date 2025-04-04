@@ -36,32 +36,32 @@ void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolum
     SDL_Event e;
     int fullscreen = 0;
 
-    background.image = IMG_Load("../assets/backgrounds/bgf.png");
-    btn1.image = IMG_Load("../assets/buttons/buttonvs.png");
-    btn2.image = IMG_Load("../assets/buttons/buttonvs.png");
-    volp.image = IMG_Load("../assets/buttons/volp.png");
-    volm.image = IMG_Load("../assets/buttons/volm.png");
-    fs.image = IMG_Load("../assets/buttons/Fullscreen.png");
-    win.image = IMG_Load("../assets/buttons/Windowed.png");
-    volcon.image = IMG_Load("../assets/buttons/VolumeConfig.png");
-    wincon.image = IMG_Load("../assets/buttons/WindowConfig.png");
-    options.image = IMG_Load("../assets/buttons/Option.png");
-    returntxt.image = IMG_Load("../assets/buttons/Return_1.png");
-    music.image = IMG_Load("../assets/buttons/Music.png");
-    logo.image = IMG_Load("../assets/buttons/logo1.png");
+    background.image = IMG_Load("./assets/backgrounds/bgf.png");
+    btn1.image = IMG_Load("./assets/buttons/buttonvs.png");
+    btn2.image = IMG_Load("./assets/buttons/buttonvs.png");
+    volp.image = IMG_Load("./assets/buttons/volp.png");
+    volm.image = IMG_Load("./assets/buttons/volm.png");
+    fs.image = IMG_Load("./assets/buttons/Fullscreen.png");
+    win.image = IMG_Load("./assets/buttons/Windowed.png");
+    volcon.image = IMG_Load("./assets/buttons/VolumeConfig.png");
+    wincon.image = IMG_Load("./assets/buttons/WindowConfig.png");
+    options.image = IMG_Load("./assets/buttons/Option.png");
+    returntxt.image = IMG_Load("./assets/buttons/Return_1.png");
+    music.image = IMG_Load("./assets/buttons/Music.png");
+    logo.image = IMG_Load("./assets/buttons/logo1.png");
 
-    btn1f.image = IMG_Load("../assets/buttons/button1.png");
-    btn2f.image = IMG_Load("../assets/buttons/button1.png");
-    volpf.image = IMG_Load("../assets/buttons/volp1.png");
-    volmf.image = IMG_Load("../assets/buttons/volm1.png");
-    fsf.image = IMG_Load("../assets/buttons/Fullscreen1.png");
-    winf.image = IMG_Load("../assets/buttons/Windowed1.png");
-    volconf.image = IMG_Load("../assets/buttons/VolumeConfig1.png");
-    winconf.image = IMG_Load("../assets/buttons/WindowConfig1.png");
-    optionsf.image = IMG_Load("../assets/buttons/Options1.png");
-    returntxtf.image = IMG_Load("../assets/buttons/Return1.png");
-    musicf.image = IMG_Load("../assets/buttons/Music1.png");
-    logof.image = IMG_Load("../assets/buttons/log.png");
+    btn1f.image = IMG_Load("./assets/buttons/button1.png");
+    btn2f.image = IMG_Load("./assets/buttons/button1.png");
+    volpf.image = IMG_Load("./assets/buttons/volp1.png");
+    volmf.image = IMG_Load("./assets/buttons/volm1.png");
+    fsf.image = IMG_Load("./assets/buttons/Fullscreen1.png");
+    winf.image = IMG_Load("./assets/buttons/Windowed1.png");
+    volconf.image = IMG_Load("./assets/buttons/VolumeConfig1.png");
+    winconf.image = IMG_Load("./assets/buttons/WindowConfig1.png");
+    optionsf.image = IMG_Load("./assets/buttons/Options1.png");
+    returntxtf.image = IMG_Load("./assets/buttons/Return1.png");
+    musicf.image = IMG_Load("./assets/buttons/Music1.png");
+    logof.image = IMG_Load("./assets/buttons/log.png");
 
     if ((background.image == NULL) || (btn1.image == NULL) || (volp.image == NULL) || (volm.image == NULL) || (btn2.image == NULL) || (fs.image == NULL) || (win.image == NULL) || (volcon.image == NULL) || (wincon.image == NULL) || (options.image == NULL) || (returntxt.image == NULL) || (music.image == NULL) || (btn1f.image == NULL) || (volpf.image == NULL) || (volmf.image == NULL) || (btn2f.image == NULL) || (fsf.image == NULL) || (winf.image == NULL) || (volconf.image == NULL) || (winconf.image == NULL) || (optionsf.image == NULL) || (returntxtf.image == NULL) || (musicf.image == NULL) || (logo.image == NULL) || (logof.image == NULL))
 
@@ -268,7 +268,7 @@ void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolum
                     if (fullscreen == 1)
                     {
                         SDL_FreeSurface(background.image);
-                        background.image = IMG_Load("../assets/backgrounds/bgf.png");
+                        background.image = IMG_Load("./assets/backgrounds/bgf.png");
                         SDL_FreeSurface(window);
                         SDL_WM_ToggleFullScreen(window);
                     }
@@ -279,7 +279,7 @@ void menu_options(SDL_Surface *window, Mix_Music *music_chunk, int *currentVolum
                     SDL_FreeSurface(window);
                     window = SDL_SetVideoMode(1920, 1080, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE);
                     SDL_FreeSurface(background.image);
-                    background.image = IMG_Load("../assets/backgrounds/bgf.png");
+                    background.image = IMG_Load("./assets/backgrounds/bgf.png");
                 }
                 if (verif_collision_2(e, returntxt))
                 {
