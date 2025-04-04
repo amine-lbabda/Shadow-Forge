@@ -50,7 +50,7 @@ void Menu(SDL_Surface *screen)
     positionBackground.x = 0;
     positionBackground.y = 0;
 
-    positionLogo.x = 580;
+    positionLogo.x = 720;
     positionLogo.y = 100;
     positionTeamText.x = 120;
     positionTeamText.y = 100;
