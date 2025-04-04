@@ -7,8 +7,6 @@ void Menu(SDL_Surface *screen)
 {
     int initialMenu = 0;
     int initalVolume = MIX_MAX_VOLUME;
-    SDL_Surface *hist = NULL;
-    SDL_Rect positionhist, positionreturn;
     SDL_Surface *background = NULL, *logo = NULL, *play = NULL, *options = NULL, *scores = NULL, *quit = NULL, *flip = NULL, *text_group = NULL, *menu_text = NULL;
     SDL_Event event;
     Mix_Chunk *son;
@@ -31,7 +29,6 @@ void Menu(SDL_Surface *screen)
     flip = IMG_Load("./assets/buttons/flip.png");
     font = TTF_OpenFont("./assets/fonts/HARRYP.TTF", 40);
     font_menu = TTF_OpenFont("./assets/fonts/HARRYP.TTF", 60);
-    hist = IMG_Load("./assets/buttons/hist.png");
     if ((font == NULL) || (font_menu == NULL))
     {
         fprintf(stderr, "Failed to load font: %s\n", TTF_GetError());
@@ -68,10 +65,6 @@ void Menu(SDL_Surface *screen)
 
     positionQuit.x = 583;
     positionQuit.y = 730;
-    positionhist.x = 0;
-    positionhist.y = 0;
-    positionreturn.x = 0;
-    positionreturn.y = 0;
     Mix_PlayMusic(music, -1);
     SDL_WM_SetCaption("Menu", NULL);
     while (run)
