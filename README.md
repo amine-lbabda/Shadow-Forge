@@ -1,3 +1,4 @@
+![alttext](image.png)
 # Shadow-Forge
 Shadow-Forge is a game built using SDL 1.2 and C
 
