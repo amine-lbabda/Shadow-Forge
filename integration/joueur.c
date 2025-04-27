@@ -217,14 +217,14 @@ void sauter(perso *p, Uint32 dt)
     if (p->up == 1)
     {
         p->tempsActuel = SDL_GetTicks();
-        // if (saut_son == NULL)
-        // {
-        //     saut_son = Mix_LoadWAV("saut.wav");
-        //     if (!saut_son)
-        //     {
-        //         printf("Erreur chargement son: %s\n", Mix_GetError());
-        //     }
-        // }
+        if (saut_son == NULL)
+        {
+            saut_son = Mix_LoadWAV("saut.wav");
+            if (!saut_son)
+            {
+                printf("Erreur chargement son: %s\n", Mix_GetError());
+            }
+        }
         if (p->type_saut == 0)
         {
             if (p->vitesse_y == 0)
@@ -290,7 +290,6 @@ void sauter(perso *p, Uint32 dt)
             }
             else
             {
-                p->pos_actuelle_y >= p->posinit_y;
                 p->up = 0;
                 p->x_rel = 0;
                 p->y_rel = 0;

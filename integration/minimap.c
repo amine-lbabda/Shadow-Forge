@@ -10,8 +10,8 @@ void initMiniMap(MiniMap *m, int level) {
 
     m->miniBackground = SDL_LoadBMP(path);
     m->miniPlayer = SDL_LoadBMP("mini_player.bmp"); 
-    m->posMiniMap.x = 10;
-    m->posMiniMap.y = 10;
+    m->posMiniMap.x = 500;
+    m->posMiniMap.y = 0;
     m->scale = 20; 
 }
 

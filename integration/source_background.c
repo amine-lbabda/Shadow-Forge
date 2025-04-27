@@ -36,7 +36,6 @@ void scrolling_deplacement(background *b, SDL_Surface *e, int dx, perso *p,
   double dt_sec;
   double dy;
 
-  // Convert milliseconds to seconds
   dt_sec = (double)dt / 1000.0;
   vitesse_effective = fabs(p->vitesse);
   if (toggle_background == 0)
@@ -44,12 +43,11 @@ void scrolling_deplacement(background *b, SDL_Surface *e, int dx, perso *p,
     switch (b->direction)
     {
     case 0:
-    { // Scrolling left
+    { 
       dx = vitesse_effective * dt_sec * 100;
       if (b->poscamera.x > 0)
       {
         b->poscamera.x -= dx;
-        // Prevent scrolling past left boundary
         if (b->poscamera.x < 0)
         {
           b->poscamera.x = 0;
@@ -60,11 +58,10 @@ void scrolling_deplacement(background *b, SDL_Surface *e, int dx, perso *p,
 
     case 1:
     {
-      if (p->pos_actuelle_x > e->w / 2)
+      if (p->pos_actuelle_x > (double) e->w / 2)
       {
         dx = vitesse_effective * dt_sec * 100;
 
-        // Allow scrolling to the full width of the background image
         if (b->poscamera.x < b->image->w - b->poscamera.w)
         {
           b->poscamera.x += dx;
@@ -74,7 +71,7 @@ void scrolling_deplacement(background *b, SDL_Surface *e, int dx, perso *p,
     }
     break;
     case 2:
-    { // Scrolling up
+    { 
       dy = vitesse_effective * dt_sec * 100;
 
       if (b->poscamera.y > 0)

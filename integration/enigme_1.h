@@ -2,6 +2,7 @@
 #define MENU_H_INCLUDED
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
+#include <SDL/SDL_mixer.h>
 
 typedef struct
 {

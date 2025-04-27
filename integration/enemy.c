@@ -1,9 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <SDL/SDL.h>
-#include <SDL/SDL_mixer.h>
 #include "enemy.h"
 #include "joueur.h"
+#include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
+#include <stdio.h>
+#include <stdlib.h>
 void init_enemy(Enemy *e, SDL_Surface *sprite, SDL_Surface *sprite_phase2, int has_phase2)
 {
     e->sprite = sprite;
@@ -70,27 +70,34 @@ void animate_enemy(Enemy *e)
     e->possprite.y = e->etat_anim * e->possprite.h;
 }
 
-void update_enemy(Enemy *e, SDL_Rect target, perso *p) {
+void update_enemy(Enemy *e, SDL_Rect target, perso *p)
+{
     int follow_range = 400;
     int threshold = 5;
 
-    if (e->has_phase2 && e->hp <= 50 && e->phase == 1) {
+    if (e->has_phase2 && e->hp <= 50 && e->phase == 1)
+    {
         e->phase = 2;
-        if (e->sprite_phase2 != NULL) {
+        if (e->sprite_phase2 != NULL)
+        {
             e->sprite = e->sprite_phase2;
         }
         e->damage += 5;
     }
 
     Uint32 now = SDL_GetTicks();
-    if (now - e->last_target_time >= 2000) {
+    if (now - e->last_target_time >= 2000)
+    {
         e->current_target = !e->current_target;
         e->last_target_time = now;
     }
 
-    if (e->current_target == 1) {
+    if (e->current_target == 1)
+    {
         target.x = 1900;
-    } else {
+    }
+    else
+    {
         target.x = 800;
     }
 
@@ -100,31 +107,47 @@ void update_enemy(Enemy *e, SDL_Rect target, perso *p) {
 
     int player_distance = abs(e->pos.x - p->pos.x);
 
-    if (player_distance <= follow_range) {
-        if (e->pos.x < p->pos.x - threshold) {
+    if (player_distance <= follow_range)
+    {
+        if (e->pos.x < p->pos.x - threshold)
+        {
             e->direction = 0;
             e->pos.x += e->vitesse;
-            e->etat_anim = 0; 
-        } else if (e->pos.x > p->pos.x + threshold) {
+            e->etat_anim = 0;
+        }
+        else if (e->pos.x > p->pos.x + threshold)
+        {
             e->direction = 1;
             e->pos.x -= e->vitesse;
-            e->etat_anim = 1; 
-        } else {
-            if (e->direction == 0) {
-                e->etat_anim = 2; 
-            } else {
-                e->etat_anim = 3; 
+            e->etat_anim = 1;
+        }
+        else
+        {
+            if (e->direction == 0)
+            {
+                e->etat_anim = 2;
+            }
+            else
+            {
+                e->etat_anim = 3;
             }
         }
-    } else {
-        if (e->pos.x < target.x) {
+    }
+    else
+    {
+        if (e->pos.x < target.x)
+        {
             e->direction = 0;
-        } else {
+        }
+        else
+        {
             e->direction = 1;
         }
 
-        if (!check_collision(e->pos, target)) {
-            switch (e->direction) {
+        if (!check_collision(e->pos, target))
+        {
+            switch (e->direction)
+            {
             case 0:
                 e->pos.x += e->vitesse;
                 e->etat_anim = 0;
@@ -134,8 +157,11 @@ void update_enemy(Enemy *e, SDL_Rect target, perso *p) {
                 e->etat_anim = 1;
                 break;
             }
-        } else {
-            switch (e->direction) {
+        }
+        else
+        {
+            switch (e->direction)
+            {
             case 0:
                 e->etat_anim = 2;
                 break;
@@ -150,17 +176,19 @@ void update_enemy(Enemy *e, SDL_Rect target, perso *p) {
     e->posscreen.y = e->pos.y;
 }
 
-
 void interaction(Enemy *e, perso *p)
 {
+    // TODO:fix interaction
     Uint32 now = SDL_GetTicks();
 
-    if (check_collision(e->pos, p->pos)&&((p->etat_animation==8)||(p->etat_animation==9)))
+    if (check_collision(e->pos, p->pos) && ((p->etat_animation == 8) || (p->etat_animation == 9)))
     {
-        //range rika
-            SDL_Rect player_hitbox = p->pos;
+        printf("Tawika fi interaction\n");
+        // range rika
+        SDL_Rect player_hitbox = p->pos;
         if (p->direction == 0)
         {
+            printf("Hitbox\n");
             player_hitbox.x += 5;
         }
         else
@@ -171,9 +199,10 @@ void interaction(Enemy *e, perso *p)
 
         if (check_collision(player_hitbox, e->pos))
         {
+            printf("9a3ed yadhreb fya !\n");
             e->hp -= 10;
             e->etat_anim = 1;
-            if (e->pos.x>p->pos.x)
+            if (e->pos.x > p->pos.x)
                 e->pos.x += 115;
             else
                 e->pos.x -= 115;
@@ -203,8 +232,7 @@ int heal(SDL_Rect player, SDL_Rect *pack, int *visible, int *player_hp)
 
 int check_collision(SDL_Rect a, SDL_Rect b)
 {
-    if ((a.x + a.w < b.x) || (a.x > b.x + b.w) ||
-        (a.y + a.h < b.y) || (a.y > b.y + b.h))
+    if ((a.x + a.w < b.x) || (a.x > b.x + b.w) || (a.y + a.h < b.y) || (a.y > b.y + b.h))
     {
         return 0;
     }
