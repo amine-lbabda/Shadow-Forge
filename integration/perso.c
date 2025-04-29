@@ -5,7 +5,9 @@
 #include "enigme_1.h"
 #include "joueur.h"
 #include "minimap.h"
+#include <SDL/SDL_error.h>
 #include <stdio.h>
+#include <stdlib.h>
 int main(int argc, char **argv)
 {
     int leaves_world_x = 4200;
@@ -20,7 +22,7 @@ int main(int argc, char **argv)
     SDL_Surface *leaves = IMG_Load("resized_leaves.png");
     Uint32 start_time = 0;
     // SDL_Surface *platform = NULL;
-    // SDL_Surface *time_surface = NULL;
+    SDL_Surface *time_surface = NULL;
     int puzzle_active = 0;
     char buffer_time[200];
     SDL_Color color = {255, 255, 255};
@@ -114,7 +116,17 @@ int main(int argc, char **argv)
     SDL_Surface *hearts = IMG_Load("hearts.png");
     // platform = IMG_Load("image.png");
     font = TTF_OpenFont("./test.TTF", 50);
-    // time_surface = TTF_RenderText_Solid(font, buffer_time, color);
+    if (!font)
+    {
+        printf("Erreur_font:%s\n", SDL_GetError());
+        return EXIT_FAILURE;
+    }
+    time_surface = TTF_RenderText_Solid(font, buffer_time, color);
+    if (!time_surface)
+    {
+        printf("Erreur:%s\n", SDL_GetError());
+        // return EXIT_FAILURE;
+    }
     score_surface = TTF_RenderText_Solid(font, buffer_score, color);
     SDL_Surface *backgroundMask = SDL_LoadBMP("backgroundMask.bmp");
     initMiniMap(&minimap, 1);
@@ -144,12 +156,30 @@ int main(int argc, char **argv)
     pos_guidance.h = guide->h;
     pos_score.x = 800;
     pos_score.y = 0;
-    pos_score.w = score_surface->w + HAUTEURFENETRE;
-    pos_score.h = score_surface->h + LARGEURFENETRE;
-    // pos_timer.x = 1000;
-    // pos_timer.y = 0;
-    // pos_timer.w = time_surface->w + HAUTEURFENETRE;
-    // pos_timer.h = time_surface->h + LARGEURFENETRE;
+    if (score_surface)
+    {
+        pos_score.w = score_surface->w + HAUTEURFENETRE;
+        pos_score.h = score_surface->h + LARGEURFENETRE;
+    }
+    else
+    {
+        pos_score.w = HAUTEURFENETRE;
+        pos_score.h = LARGEURFENETRE;
+    }
+
+    pos_timer.x = 1000;
+    pos_timer.y = 0;
+    if (time_surface)
+    {
+        pos_timer.w = time_surface->w + HAUTEURFENETRE;
+        pos_timer.h = time_surface->h + LARGEURFENETRE;
+    }
+    else
+    {
+        pos_timer.w = HAUTEURFENETRE;
+        pos_timer.h = LARGEURFENETRE;
+    }
+
     pos_buttons.x = 1450;
     pos_buttons.y = 0;
     pos_buttons.w = button->w / 2;
@@ -666,8 +696,8 @@ int main(int argc, char **argv)
             score_surface = TTF_RenderText_Solid(font, buffer_score, color);
             SDL_BlitSurface(score_surface, NULL, ecran, &pos_score);
             sprintf(buffer_time, "Time:%u", (SDL_GetTicks() - start_time) / 1000);
-            // time_surface = TTF_RenderText_Solid(font, buffer_time, color);
-            // SDL_BlitSurface(time_surface, NULL, ecran, &pos_timer);
+            time_surface = TTF_RenderText_Solid(font, buffer_time, color);
+            SDL_BlitSurface(time_surface, NULL, ecran, &pos_timer);
             SDL_BlitSurface(button, NULL, ecran, &pos_buttons);
             // if (perfectPixelCollision(platform, joueurs[0].pos))
             // {
