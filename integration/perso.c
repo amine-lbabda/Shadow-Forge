@@ -707,6 +707,10 @@ int main(int argc, char **argv)
             // {
             //   enigme_2(ecran, &quitter);
             // }
+            // if (joueurs[0].pos.x >= 2500)
+            // {
+            //     enigme_1(ecran, &quitter);
+            // }
             animate_leaves(leaves, pos_leaves, leaves_world_x, &leaves_bounce_y, &leaves_direction, leaves_bounce_min,
                            leaves_bounce_max, leaves_bounce_speed, camX, ecran);
             animate_leaves(leaves, pos_leaves, leaves_world_second_x, &leaves_bounce_y, &leaves_direction,
