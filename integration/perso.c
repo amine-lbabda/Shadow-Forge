@@ -5,16 +5,22 @@
 #include "enigme_1.h"
 #include "joueur.h"
 #include "minimap.h"
-#include <SDL/SDL_image.h>
-#include <SDL/SDL_video.h>
 #include <stdio.h>
 int main(int argc, char **argv)
 {
-    int leafes = 1;
-    SDL_Surface *leaves = IMG_Load("leaves.png");
+    int leaves_world_x = 4200;
+    int leaves_world_second_x = 2800;
+    int start_world_x = 500;
+    int world_mid_x = 1930;
+    int leaves_bounce_y = 0;
+    int leaves_direction = 1;
+    int leaves_bounce_speed = 1;
+    int leaves_bounce_min = 0;
+    int leaves_bounce_max = 100;
+    SDL_Surface *leaves = IMG_Load("resized_leaves.png");
     Uint32 start_time = 0;
     // SDL_Surface *platform = NULL;
-    SDL_Surface *time_surface = NULL;
+    // SDL_Surface *time_surface = NULL;
     int puzzle_active = 0;
     char buffer_time[200];
     SDL_Color color = {255, 255, 255};
@@ -59,8 +65,7 @@ int main(int argc, char **argv)
     int demiEcran;
     int centreJoueurY;
     int demiHauteurEcran;
-    SDL_Rect health_pack_screen, pos_guidance, pos_score, pos_timer, pos_platform, pos_hearts, pos_buttons, pos_heart,
-        pos_leaves;
+    SDL_Rect health_pack_screen, pos_guidance, pos_score, pos_timer, pos_platform, pos_buttons, pos_heart, pos_leaves;
     if (TTF_Init() == -1)
     {
         printf("Erreur TTF_Init: %s\n", TTF_GetError());
@@ -106,14 +111,12 @@ int main(int argc, char **argv)
     SDL_Surface *boss_sprite = IMG_Load("sengo.png");
     SDL_Surface *boss_sprite2 = IMG_Load("sengo.png");
     SDL_Surface *button = IMG_Load("buttons.png");
-    SDL_Surface *hearts = IMG_Load("heart1.png");
+    SDL_Surface *hearts = IMG_Load("hearts.png");
     // platform = IMG_Load("image.png");
-    sprintf(buffer_time, "Time:%u", start_time);
     font = TTF_OpenFont("./test.TTF", 50);
-    time_surface = TTF_RenderText_Solid(font, buffer_time, color);
+    // time_surface = TTF_RenderText_Solid(font, buffer_time, color);
     score_surface = TTF_RenderText_Solid(font, buffer_score, color);
     SDL_Surface *backgroundMask = SDL_LoadBMP("backgroundMask.bmp");
-    bg.direction = -1;
     initMiniMap(&minimap, 1);
     init_perso(&joueurs[0]);
     init_enemy(&sengo, boss_sprite, boss_sprite2, 1);
@@ -123,7 +126,7 @@ int main(int argc, char **argv)
         printf("Failed to load :%s\n", IMG_GetError());
     }
     sengo.pos.x = 1700;
-    sengo.pos.y = 655;
+    sengo.pos.y = 720;
     joueurs[0].nb_joueur = 1;
 
     joueurs[0].pos.x = 100;
@@ -143,29 +146,26 @@ int main(int argc, char **argv)
     pos_score.y = 0;
     pos_score.w = score_surface->w + HAUTEURFENETRE;
     pos_score.h = score_surface->h + LARGEURFENETRE;
-    pos_timer.x = 1000;
-    pos_timer.y = 0;
-    pos_timer.w = time_surface->w + HAUTEURFENETRE;
-    pos_timer.h = time_surface->h + LARGEURFENETRE;
+    // pos_timer.x = 1000;
+    // pos_timer.y = 0;
+    // pos_timer.w = time_surface->w + HAUTEURFENETRE;
+    // pos_timer.h = time_surface->h + LARGEURFENETRE;
     pos_buttons.x = 1450;
     pos_buttons.y = 0;
     pos_buttons.w = button->w / 2;
     pos_buttons.h = button->h / 2;
-    pos_heart.x = 40;
-    pos_heart.y = 30;
-    pos_leaves.x = 1920;
-    pos_leaves.y = 0;
-    // pos_heart.w = hearts->w;
-    // pos_heart.h = hearts->h;
-    // SDL_Rect pos_heart_init;
-    // pos_heart_init.x = hearts->w / 2;
-    // pos_heart_init.y = hearts->h / 2;
+    pos_leaves.x = 0;
+    pos_leaves.y = 70;
+    pos_leaves.w = leaves->w;
+    pos_leaves.h = leaves->h;
     // pos_platform.x = 900;
     // pos_platform.y = 850;
     // pos_platform.w = platform->w;
-    // pos_platform.h = platform->h;ù
+    // pos_platform.h = platform->h;
     while (quitter)
     {
+
+        printf("pos_joueur_x:%d|pos_joueur_y:%d\n", joueurs[0].pos.x, joueurs[0].pos.y);
 
         temps = SDL_GetTicks();
 
@@ -193,6 +193,7 @@ int main(int argc, char **argv)
                 }
                 else if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
                 {
+
                     right_pressed = 1;
                     joueurs[0].direction = 1;
                     if (joueurs[0].acceleration < 0.5)
@@ -523,12 +524,14 @@ int main(int argc, char **argv)
         updateMiniMap(&minimap, joueurs[0].pos, camera);
         if (nb_joueurs > 1)
         {
+
             joueurs[1].posscreen.x = joueurs[1].pos.x - camX;
             joueurs[1].posscreen.y = joueurs[1].pos.y - camY;
         }
 
         if (nb_joueurs == 2)
         {
+
             SDL_Rect viewport1 = {0, 0, LARGEURFENETRE / 2, HAUTEURFENETRE};
             SDL_Rect viewport2 = {LARGEURFENETRE / 2, 0, LARGEURFENETRE / 2, HAUTEURFENETRE};
 
@@ -593,6 +596,7 @@ int main(int argc, char **argv)
         }
         else
         {
+
             bg_width = bg.image->w;
             scroll_start = bg.poscamera.x;
             scroll_width = ecran->w;
@@ -662,17 +666,9 @@ int main(int argc, char **argv)
             score_surface = TTF_RenderText_Solid(font, buffer_score, color);
             SDL_BlitSurface(score_surface, NULL, ecran, &pos_score);
             sprintf(buffer_time, "Time:%u", (SDL_GetTicks() - start_time) / 1000);
-            time_surface = TTF_RenderText_Solid(font, buffer_time, color);
-            SDL_BlitSurface(time_surface, NULL, ecran, &pos_timer);
+            // time_surface = TTF_RenderText_Solid(font, buffer_time, color);
+            // SDL_BlitSurface(time_surface, NULL, ecran, &pos_timer);
             SDL_BlitSurface(button, NULL, ecran, &pos_buttons);
-            printf("hearts:%d", joueurs[0].coeurs_pleins);
-            printf("hearts_partiel:%.1f", joueurs[0].coeur_partiel);
-            if (joueurs[0].coeurs_pleins == 5)
-            {
-                SDL_BlitSurface(hearts, NULL, ecran, &pos_heart);
-            }
-
-            // pos_leaves.y += 10;
             // if (perfectPixelCollision(platform, joueurs[0].pos))
             // {
             //     joueurs[0].pos.x = (int)joueurs[0].pos_actuelle_x;
@@ -681,27 +677,18 @@ int main(int argc, char **argv)
             // {
             //   enigme_2(ecran, &quitter);
             // }
-            SDL_BlitSurface(leaves, NULL, ecran, &pos_leaves);
-            pos_leaves.x -= 10;
-            if (pos_leaves.x == 0)
-            {
-                pos_leaves.x = 1920;
-            }
-            if (joueurs[0].pos.x >= 6000)
-            {
-                enigme_1(ecran, &quitter);
-            }
-            // SDL_BlitSurface(platform, NULL, ecran, &pos_platform);
-            printf("ennemy_hp:%d", sengo.hp);
-        }
-        if (quitter == 1)
-        {
+            animate_leaves(leaves, pos_leaves, leaves_world_x, &leaves_bounce_y, &leaves_direction, leaves_bounce_min,
+                           leaves_bounce_max, leaves_bounce_speed, camX, ecran);
+            animate_leaves(leaves, pos_leaves, leaves_world_second_x, &leaves_bounce_y, &leaves_direction,
+                           leaves_bounce_min, leaves_bounce_max, leaves_bounce_speed, camX, ecran);
+            animate_leaves(leaves, pos_leaves, start_world_x, &leaves_bounce_y, &leaves_direction, leaves_bounce_min,
+                           leaves_bounce_max, leaves_bounce_speed, camX, ecran);
+            animate_leaves(leaves, pos_leaves, world_mid_x, &leaves_bounce_y, &leaves_direction, leaves_bounce_min,
+                           leaves_bounce_max, leaves_bounce_speed, camX, ecran);
             SDL_Flip(ecran);
+            SDL_Delay(16);
         }
-
-        SDL_Delay(16);
     }
-
     SDL_FreeSurface(bg.image);
     liberer_enemy(&sengo);
     SDL_FreeSurface(health_img);
@@ -712,11 +699,11 @@ int main(int argc, char **argv)
     TTF_CloseFont(font);
     TTF_Quit();
     SDL_FreeSurface(score_surface);
+    SDL_FreeSurface(leaves);
     SDL_FreeSurface(backgroundMask);
     for (int i = 0; i < nb_joueurs; i++)
     {
         liberation(&joueurs[i]);
     }
     SDL_Quit();
-    return EXIT_SUCCESS;
 }

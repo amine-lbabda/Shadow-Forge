@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
+#include <SDL/SDL_mixer.h>
 #include <SDL/SDL_ttf.h>
 #define LARGEURFENETRE 1920
 #define HAUTEURFENETRE 1080
@@ -8,27 +9,18 @@
 typedef struct perso perso;
 typedef struct background
 {
-	SDL_Surface *image;
-	SDL_Rect posimage;
-	SDL_Rect poscamera;
-	int direction;
-	// Mix_Chunk *perdre_vie;
-	// Mix_Chunk *gain_vie;
-	// Mix_Chunk *augmentation;
-	// Mix_Chunk *record;
-	// Mix_Music *musique;
-	// Mix_Chunk *echoue;
-	// Mix_Chunk *succes;
-	// Mix_Chunk *victoire;
-	// Mix_Chunk *mort;
-	// Mix_Chunk *blessure;
-	// Mix_Chunk *passe_niveau;
+    SDL_Surface *image;
+    SDL_Rect posimage;
+    SDL_Rect poscamera;
+    int direction;
+    Mix_Music *musique;
+    // Mix_Chunk *passe_niveau;
 } background;
 
 typedef struct joueur
 {
-	SDL_Surface *image;
-	SDL_Rect posjoueur;
+    SDL_Surface *image;
+    SDL_Rect posjoueur;
 } joueur;
 // typedef struct obstacle
 // {
@@ -36,22 +28,8 @@ typedef struct joueur
 // 	SDL_Rect posimg;
 // 	int type;
 // } obstacle;
-// typedef struct temps
-// {
-// 	SDL_Surface *text;
-// 	char text_input[50];
-// 	TTF_Font *font;
-// 	int size;
-// } temps;
 void init_background(background *b, SDL_Surface *e, char nom_fichier[]);
 void posbackground(background *b, int x, int y, int w, int h);
 void poscam(background *b, int x, int y, int w, int h);
-// void scrolling(background *b, SDL_Surface *e, int dx, int dy, perso *p, Uint32 dt);
-void scrolling_deplacement(background *b, SDL_Surface *e, int dx, perso *p, Uint32 dt,int toggle_background);
-// void init_obstacle(obstacle *o);
-// void init_temps();
-// void afficher(SDL_Surface *image, SDL_Rect *posimg, SDL_Surface *ecran, SDL_Rect *posimg_finale);
-// void changer_pos_background(SDL_Rect *posimg, int dx);
-// SDL_Surface *calcul_temps();
-// void free_surfaces(SDL_Surface *background);
-// void background_loop();
+void animate_leaves(SDL_Surface *leaves, SDL_Rect leaves_pos, int world_x, int *bounce_y, int *direction,
+                    int bounce_min, int bounce_max, int bounce_speed, int camX, SDL_Surface *screen);

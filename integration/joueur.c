@@ -1,11 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "joueur.h"
 #include <SDL/SDL.h>
-#include <math.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
 #include <SDL/SDL_ttf.h>
-#include "joueur.h"
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 void init_perso(perso *p)
 {
     p->sprite_player = IMG_Load("rika.png");
@@ -195,7 +195,6 @@ void deplacer(perso *p, Uint32 dt)
     if (p->pos.x < 0)
         p->pos.x = 0;
 
-
     printf("Accel: %.2f, Vitesse: %.2f, Dir: %d, PosX: %d\n", p->acceleration, p->vitesse, p->direction, p->pos.x);
     if (p->en_dash)
         printf(" DASH ACTIVÉ | vitesse = %.2f\n", p->vitesse);
@@ -305,11 +304,10 @@ void sauter(perso *p, Uint32 dt)
                 p->y_rel = 0;
                 p->frameActuelle = 0;
             }
-            if ((p->pos_actuelle_y >= p->posinit_y) )
+            if ((p->pos_actuelle_y >= p->posinit_y))
             {
                 p->type_saut = 0;
                 p->vitesse_y = 0;
-
 
                 p->posscreen.y = p->pos_actuelle_y;
                 p->posscreen.x = p->pos.x;
