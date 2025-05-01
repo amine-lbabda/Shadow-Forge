@@ -1,3 +1,13 @@
+/**
+ * @file perso.c
+ * @author Divine Vendetta Team 
+ * @brief Ce fichier représente le gameloop du notre jeu vidéo Shadow Forge
+ * @version 1.0
+ * @date 2025-05-01
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
 #include "background.h"
 #include "collision.h"
 #include "enemy.h"
@@ -7,9 +17,16 @@
 #include "minimap.h"
 #include <stdio.h>
 #include <stdlib.h>
+/**
+ * @brief Cette fonction représente le gameloop principale du notre jeu 
+ * 
+ * @param argc 
+ * @param argv 
+ * @return int 
+ */
 int main(int argc, char **argv)
 {
-    int leaves_world_x = 4200;
+    int leaves_world_x = 4200; 
     int leaves_world_second_x = 2800;
     int start_world_x = 500;
     int world_mid_x = 1930;
