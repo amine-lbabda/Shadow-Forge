@@ -21,12 +21,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 for the JavaScript code in this file
 */
 var menudata={children:[
-{text:"Main Page",url:"index.html"},
-{text:"Data Structures",url:"annotated.html",children:[
-{text:"Data Structures",url:"annotated.html"},
-{text:"Data Structure Index",url:"classes.html"}]},
-{text:"Files",url:"files.html",children:[
-{text:"File List",url:"files.html"},
-{text:"Globals",url:"globals.html",children:[
-{text:"All",url:"globals.html"},
-{text:"Functions",url:"globals_func.html"}]}]}]}
+{text:"Page principale",url:"index.html"},
+{text:"Structures de données",url:"annotated.html",children:[
+{text:"Structures de données",url:"annotated.html"},
+{text:"Index des structures de données",url:"classes.html"}]},
+{text:"Fichiers",url:"files.html",children:[
+{text:"Liste des fichiers",url:"files.html"},
+{text:"Variables globale",url:"globals.html",children:[
+{text:"Tout",url:"globals.html"},
+{text:"Fonctions",url:"globals_func.html"}]}]}]}
