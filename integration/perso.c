@@ -5,7 +5,6 @@
 #include "enigme_1.h"
 #include "joueur.h"
 #include "minimap.h"
-#include <SDL/SDL_error.h>
 #include <stdio.h>
 #include <stdlib.h>
 int main(int argc, char **argv)
