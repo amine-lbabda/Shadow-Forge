@@ -4,9 +4,7 @@
  * @brief Ce fichier représente le gameloop du notre jeu vidéo Shadow Forge
  * @version 1.0
  * @date 2025-05-01
- *
  * @copyright Copyright (c) 2025
- *
  */
 #include "background.h"
 #include "collision.h"
@@ -19,7 +17,6 @@
 #include <stdlib.h>
 /**
  * @brief Cette fonction représente le gameloop principale du notre jeu
- *
  * @param argc
  * @param argv
  * @return int
@@ -373,6 +370,7 @@ int main(int argc, char **argv)
                             etat = 9;
                         }
                     }
+                    score++;
                 }
 
                 break;
@@ -431,7 +429,6 @@ int main(int argc, char **argv)
         }
         if (right_pressed)
         {
-            score++;
             if (joueurs[0].acceleration < 0.5)
                 joueurs[0].acceleration += 0.01;
         }
