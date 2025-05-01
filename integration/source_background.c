@@ -4,15 +4,15 @@
  * @brief Ce fichier représente les implémentations des fonctions définies dans background.h
  * @version 1.0
  * @date 2025-05-01
- * 
+ *
  * @copyright Copyright (c) 2025
- * 
+ *
  */
 #include "background.h"
 #include "joueur.h"
 /**
  * @brief Cette procédure va initialiser les champs de notre background
- * 
+ *
  * @param b  un pointeur sur le background
  * @param e représente la fenêtre du notre écran
  * @param nom_fichier le chemin du notre background
@@ -49,7 +49,7 @@ void posbackground(background *b, int x, int y, int w, int h)
 }
 /**
  * @brief Initialiser les positions du caméra
- * 
+ *
  * @param b un pointeur sur le background
  * @param x représente son position selon l'axe des abscisses
  * @param y représente son position selon l'axe des oordonnées
@@ -65,8 +65,8 @@ void poscam(background *b, int x, int y, int w, int h)
     b->poscamera.h = h;
 }
 /**
- * @brief Cette fonction va animer les feuilles verticalement 
- * 
+ * @brief Cette fonction va animer les feuilles verticalement
+ *
  * @param leaves l'image des feuilles
  * @param leaves_pos position initiale des feuilles
  * @param world_x position dans le monde réelle du jeu (Coordonnées dans photoshop) selon l'axe des abscisses
@@ -76,9 +76,9 @@ void poscam(background *b, int x, int y, int w, int h)
  * @param bounce_max  représente la limite maximale du bouncing
  * @param bounce_speed représente la vitesse du mouvement
  * @param camX représente la position du caméra
- * @param screen représente l'écran 
+ * @param screen représente l'écran
  * @return rien
- * 
+ *
  */
 void animate_leaves(SDL_Surface *leaves, SDL_Rect leaves_pos, int world_x, int *bounce_y, int *direction,
                     int bounce_min, int bounce_max, int bounce_speed, int camX, SDL_Surface *screen)
