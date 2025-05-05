@@ -55,16 +55,16 @@ void Menu(SDL_Surface *screen)
     positionLogo.y = 100;
     positionTeamText.x = 120;
     positionTeamText.y = 100;
-    positionPlay.x = 583;
-    positionPlay.y = 250;
+    positionPlay.x = 575;
+    positionPlay.y = 200;
 
     positionScores.x = 583;
-    positionScores.y = 570;
+    positionScores.y = 600;
     positionOptions.x = 583;
     positionOptions.y = 410;
 
     positionQuit.x = 583;
-    positionQuit.y = 730;
+    positionQuit.y = 800;
     Mix_PlayMusic(music, -1);
     SDL_WM_SetCaption("Menu", NULL);
     while (run)
@@ -191,12 +191,12 @@ void Menu(SDL_Surface *screen)
                     if (event.button.x >= positionScores.x && event.button.x <= positionScores.x + scores->w && event.button.y >= positionScores.y && event.button.y <= positionScores.y + scores->h && run)
                     {
                         Mix_PlayChannel(-1, son, 0);
-                        initialMenu = 2;
+                        initialMenu = 3;
                     }
                     if (event.button.x >= positionOptions.x && event.button.x <= positionOptions.x + options->w && event.button.y >= positionOptions.y && event.button.y <= positionOptions.y + options->h && run)
                     {
                         Mix_PlayChannel(-1, son, 0);
-                        initialMenu = 3;
+                        initialMenu = 2;
                     }
                     if (event.button.x >= positionQuit.x && event.button.x <= positionQuit.x + quit->w && event.button.y >= positionQuit.y && event.button.y <= positionQuit.y + quit->h && run)
                     {
@@ -214,12 +214,12 @@ void Menu(SDL_Surface *screen)
                 else if (event.motion.x >= positionScores.x && event.motion.x <= positionScores.x + scores->w && event.motion.y >= positionScores.y && event.motion.y <= positionScores.y + scores->h && run)
                 {
                     hover = 1;
-                    mouseCurs = 1;
+                    mouseCurs = 2;
                 }
                 else if (event.motion.x >= positionOptions.x && event.motion.x <= positionOptions.x + options->w && event.motion.y >= positionOptions.y && event.motion.y <= positionOptions.y + options->h && run)
                 {
                     hover = 1;
-                    mouseCurs = 2;
+                    mouseCurs = 1;
                 }
                 else if (event.motion.x >= positionQuit.x && event.motion.x <= positionQuit.x + quit->w && event.motion.y >= positionQuit.y && event.motion.y <= positionQuit.y + quit->h && run)
                 {
@@ -243,17 +243,17 @@ void Menu(SDL_Surface *screen)
                 buttonMoition(positionFlip, screen, flip);
                 break;
             case 1:
-                positionFlip.x = positionPlay.x + 100;
+                positionFlip.x = positionOptions.x + 100;
                 positionFlip.y = positionOptions.y + 95;
                 buttonMoition(positionFlip, screen, flip);
                 break;
             case 2:
-                positionFlip.x = positionPlay.x + 100;
+                positionFlip.x = positionScores.x + 100;
                 positionFlip.y = positionScores.y + 95;
                 buttonMoition(positionFlip, screen, flip);
                 break;
             case 3:
-                positionFlip.x = positionPlay.x + 100;
+                positionFlip.x = positionQuit.x + 100;
                 positionFlip.y = positionQuit.y + 95;
                 buttonMoition(positionFlip, screen, flip);
                 break;
@@ -272,17 +272,17 @@ void Menu(SDL_Surface *screen)
                     buttonMoition(positionFlip, screen, flip);
                     break;
                 case 1:
-                    positionFlip.x = positionPlay.x + 100;
+                    positionFlip.x = positionOptions.x + 100;
                     positionFlip.y = positionOptions.y + 95;
                     buttonMoition(positionFlip, screen, flip);
                     break;
                 case 2:
-                    positionFlip.x = positionPlay.x + 100;
+                    positionFlip.x = positionScores.x + 100;
                     positionFlip.y = positionScores.y + 95;
                     buttonMoition(positionFlip, screen, flip);
                     break;
                 case 3:
-                    positionFlip.x = positionPlay.x + 100;
+                    positionFlip.x = positionQuit.x + 100;
                     positionFlip.y = positionQuit.y + 95;
                     buttonMoition(positionFlip, screen, flip);
                     break;
