@@ -7,17 +7,19 @@ void Menu(SDL_Surface *screen)
 {
     int initialMenu = 0;
     int initalVolume = MIX_MAX_VOLUME;
-    SDL_Surface *background = NULL, *logo = NULL, *play = NULL, *options = NULL, *scores = NULL, *quit = NULL, *flip = NULL, *text_group = NULL, *menu_text = NULL;
+    SDL_Surface *background = NULL, *logo = NULL, *play = NULL, *options = NULL, *scores = NULL, *quit = NULL, *flip = NULL, *text_group = NULL, *menu_text = NULL, *exit_text = NULL;
     SDL_Event event;
     Mix_Chunk *son;
     Mix_Music *music;
-    SDL_Rect positionBackground, positionLogo, positionPlay, positionOptions, positionScores, positionQuit, positionGroupText, positionTeamText;
+    SDL_Rect positionBackground, positionLogo, positionPlay, positionOptions, positionScores, positionQuit, positionGroupText, positionTeamText, positionExit;
     SDL_Color coleur_text;
     SDL_Rect positionFlip;
     TTF_Font *font = NULL, *font_menu = NULL;
+    TTF_Font *font_text = NULL;
     int run = 1;
     int hover = 0;
     int cursPosition = -1, mouseCurs = -1;
+    int exit_flip = 0;
     music = Mix_LoadMUS("./assets/audio/river.mp3");
     son = Mix_LoadWAV("./assets/audio/click.wav");
     background = IMG_Load("./assets/backgrounds/background_f.png");
@@ -39,8 +41,9 @@ void Menu(SDL_Surface *screen)
     text_group = TTF_RenderText_Blended(font, "MADE BY:DIVINE VENDETTA", coleur_text);
     menu_text = TTF_RenderText_Blended(font_menu, "MENU", coleur_text);
     SDL_Surface *menu_hist = TTF_RenderText_Blended(font, "RETURN", coleur_text);
+    exit_text = TTF_RenderText_Blended(font, "EXIT", coleur_text);
     positionGroupText.x = 1400;
-    positionGroupText.y = 1020;
+    positionGroupText.y = 1000;
     positionGroupText.w = text_group->w;
     positionGroupText.h = text_group->h;
     positionTeamText.x = 900;
@@ -65,6 +68,9 @@ void Menu(SDL_Surface *screen)
 
     positionQuit.x = 583;
     positionQuit.y = 800;
+
+    positionExit.x = 100;
+    positionExit.y = 995;
     Mix_PlayMusic(music, -1);
     SDL_WM_SetCaption("Menu", NULL);
     while (run)
@@ -79,6 +85,7 @@ void Menu(SDL_Surface *screen)
             SDL_BlitSurface(quit, NULL, screen, &positionQuit);
             SDL_BlitSurface(text_group, NULL, screen, &positionGroupText);
             SDL_BlitSurface(menu_text, NULL, screen, &positionTeamText);
+            SDL_BlitSurface(exit_text, NULL, screen, &positionExit);
         }
         else if (initialMenu == 1)
         {
@@ -203,6 +210,10 @@ void Menu(SDL_Surface *screen)
                         Mix_PlayChannel(-1, son, 0);
                         initialMenu = 4;
                     }
+                    if (event.button.x >= positionExit.x && event.button.x <= positionExit.x + exit_text->w && event.button.y >= positionExit.y && event.button.y <= positionExit.y + exit_text->h && run)
+                    {
+                        run = 0;
+                    }
                 }
                 break;
             case SDL_MOUSEMOTION:
@@ -226,6 +237,14 @@ void Menu(SDL_Surface *screen)
                     hover = 1;
                     mouseCurs = 3;
                 }
+                else if (event.motion.x >= positionExit.x && event.motion.x <= positionExit.x + exit_text->w && event.motion.y >= positionExit.y && event.motion.y <= positionExit.y + exit_text->h && run)
+                {
+                    exit_flip = 1;
+                }
+                else if (!(event.motion.x >= positionExit.x && event.motion.x <= positionExit.x + exit_text->w && event.motion.y >= positionExit.y && event.motion.y <= positionExit.y + exit_text->h) && run)
+                {
+                    exit_flip = 0;
+                }
                 else
                 {
                     mouseCurs = -1;
@@ -235,6 +254,24 @@ void Menu(SDL_Surface *screen)
         }
         if (run)
         {
+            if (exit_flip)
+            {
+                if (exit_text)
+                {
+                    SDL_FreeSurface(exit_text);
+                }
+                exit_text = TTF_RenderText_Blended(font, "EXIT", (SDL_Color){255, 0, 0});
+                SDL_BlitSurface(exit_text, NULL, screen, &positionExit);
+            }
+            else
+            {
+                if (exit_text)
+                {
+                    SDL_FreeSurface(exit_text);
+                }
+                exit_text = TTF_RenderText_Blended(font, "EXIT", coleur_text);
+                SDL_BlitSurface(exit_text, NULL, screen, &positionExit);
+            }
             switch (mouseCurs)
             {
             case 0:
@@ -256,7 +293,6 @@ void Menu(SDL_Surface *screen)
                 positionFlip.x = positionQuit.x + 100;
                 positionFlip.y = positionQuit.y + 95;
                 buttonMoition(positionFlip, screen, flip);
-                break;
             }
             if (hover)
             {
