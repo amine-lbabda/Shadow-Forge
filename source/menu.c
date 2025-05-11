@@ -352,6 +352,8 @@ void Menu(SDL_Surface *screen)
     text_group = NULL;
     SDL_FreeSurface(menu_text);
     menu_text = NULL;
+    if (exit_text)
+    SDL_FreeSurface(exit_text);
     TTF_CloseFont(font);
     font = NULL;
     TTF_Quit();
