@@ -1,4 +1,4 @@
-mymenu: main.o menu.o chargement.o save.o menu_mode.o source_menu.o source_score.o score.o options.o source_options.o quiz.o source_quiz.o source_menu_principale.o source_history.o
+mymenu: main.o menu.o chargement.o save.o tachee.o tache.o menu_mode.o source_menu.o source_score.o score.o options.o source_options.o quiz.o source_quiz.o source_menu_principale.o source_history.o
 	gcc $^ -o ./mymenu -lSDL -lSDL_image -lSDL_mixer -lSDL_ttf  -g
 
 main.o: source/main.c
@@ -24,6 +24,11 @@ source_score.o: source/source_score.c
 
 score.o: source/score.c
 	gcc -c source/score.c -g
+tachee.o: source/tachee.c
+	gcc -c source/tachee.c -g
+tache.o: source/tache.c
+	gcc -c source/tache.c -g
+
 
 options.o: source/options.c
 	gcc -c source/options.c -g
@@ -34,8 +39,11 @@ source_options.o: source/source_options.c
 quiz.o: source/quiz.c
 	gcc -c source/quiz.c -g
 
+
 source_quiz.o: source/source_quiz.c
 	gcc -c source/source_quiz.c -g
+
+
 
 source_menu_principale.o:source/source_menu_principale.c
 	gcc -c source/source_menu_principale.c -g
