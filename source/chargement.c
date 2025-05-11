@@ -6,6 +6,7 @@
 #include "save.h"
 #include "menu_mode.h"
 #include "menu.h"
+#include "tache.h"
 void chargement(SDL_Surface *ecran, int *run, int *initial_menu)
 {
     SDL_Event event;
@@ -15,10 +16,9 @@ void chargement(SDL_Surface *ecran, int *run, int *initial_menu)
     init_save(&s);
     while (quitter && *run && *initial_menu)
     {
-        switch (indice)
-        {
-        case 0:
-            afficher_save(s, ecran);
+
+        
+
             while (SDL_PollEvent(&event) && *run)
             {
                 switch (event.type)
@@ -56,9 +56,9 @@ void chargement(SDL_Surface *ecran, int *run, int *initial_menu)
                     break;
                 }
             }
-            break;
 
-        case 1:
+
+        
             afficher_sous_menu(s, ecran);
             while (SDL_PollEvent(&event))
             {
@@ -79,7 +79,7 @@ void chargement(SDL_Surface *ecran, int *run, int *initial_menu)
                         if (s.btn_select == 4)
                         {
                             printf("New Game sélectionné\n");
-                            menu_mode(ecran, run, initial_menu);
+                            start_tache(ecran,run,initial_menu);
                             Mix_FreeMusic(s.continu);
                             s.continu = Mix_LoadMUS("../assets/audio/theme2.mp3");
                             Mix_PlayMusic(s.continu, -1);
@@ -94,15 +94,16 @@ void chargement(SDL_Surface *ecran, int *run, int *initial_menu)
                 {
                     if (event.key.keysym.sym == SDLK_n)
                     {
-                        menu_mode(ecran, run, initial_menu);
+                        start_tache(ecran,run,initial_menu);
                     }
                 }
                 }
                 break;
             }
-            break;
-        }
+
+        
         SDL_Flip(ecran);
     }
     liberer_save(&s);
+    *initial_menu = 0; //TODO:fix the save issue
 }
